@@ -5,12 +5,17 @@ import Image from "next/image";
 
 const BrandLogos = () => {
   const brands = [
-    { name: "Nike", slug: "nike", logo: "/assets/imgs/brands/nike-logo.png" },
-    { name: "Adidas", slug: "adidas", logo: "/assets/imgs/brands/adidas-logo.png" },
-    { name: "Puma", slug: "puma", logo: "/assets/imgs/brands/puma-logo.png" },
-    { name: "Reebok", slug: "reebok", logo: "/assets/imgs/brands/reebok-logo.png" },
-    { name: "Converse", slug: "converse", logo: "/assets/imgs/brands/converse-logo.png" },
-    { name: "Vans", slug: "vans", logo: "/assets/imgs/brands/vans-logo.png" },
+    { name: "Nike", slug: "nike", image: "/assets/imgs/nike-logo.png" },
+    { name: "Adidas", slug: "adidas", image: "/assets/imgs/adidas-logoo.png" },
+    { name: "Puma", slug: "puma", image: "/assets/imgs/puma-logo.png" },
+    { name: "Reebok", slug: "reebok", image: "/assets/imgs/reebok-logo.png" },
+    { name: "Converse", slug: "converse", image: "/assets/imgs/converse-logo.png" },
+    { name: "Vans", slug: "vans", image: "/assets/imgs/vans-logo.png" },
+    { name: "Fila", slug: "fila", image: "/assets/imgs/fila-logo.png" },
+    { name: "Skechers", slug: "skechers", image: "/assets/imgs/skechers-log.png" },
+    { name: "New Balance", slug: "newbalance", image: "/assets/imgs/nb-logo.png" },
+    { name: "Asics", slug: "asics", image: "/assets/imgs/asics-logo.png" },
+
   ];
 
   return (
@@ -30,10 +35,11 @@ const BrandLogos = () => {
           >
             <div className="relative w-full h-20">
               <Image
-                src={brand.logo}
+                src={brand.image}
                 alt={`${brand.name} logo`}
-                fill
                 className="object-contain"
+                width={400}
+                height={400}
               />
             </div>
           </Link>

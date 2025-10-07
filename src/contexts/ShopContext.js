@@ -83,6 +83,8 @@ export const ShopContextProvider = ({ children }) => {
     getProducts();
   }, [getProducts]);
 
+  const cartQty = () => cart.length
+
   return (
     <ShopContext.Provider
       value={{
