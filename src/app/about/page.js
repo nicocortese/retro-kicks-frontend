@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function About() {
   return (
     <main className="pt-16">
@@ -8,8 +10,7 @@ export default function About() {
             Sobre Nosotros
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-            Más que una tienda, somos guardianes de la historia del calzado
-            urbano
+            Más que una tienda, somos guardianes de la historia del calzado urbano
           </p>
         </div>
       </section>
@@ -23,26 +24,24 @@ export default function About() {
                 Nuestra Historia
               </h2>
               <p className="text-lg text-gray-600 leading-relaxed mb-4">
-                Fundada en 2018 por un grupo de apasionados coleccionistas,
-                nuestra tienda nació del amor por las zapatillas que marcaron
-                épocas y definieron culturas urbanas.
+                Fundada en 2018 por un grupo de apasionados coleccionistas, nuestra tienda nació 
+                del amor por las zapatillas que marcaron épocas y definieron culturas urbanas.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed mb-4">
-                Comenzamos como un pequeño local en el barrio, pero nuestra
-                pasión por encontrar y preservar modelos icónicos nos llevó a
-                convertirnos en referentes del calzado retro.
+                Comenzamos como un pequeño local en el barrio, pero nuestra pasión por encontrar 
+                y preservar modelos icónicos nos llevó a convertirnos en referentes del calzado retro.
               </p>
               <p className="text-lg text-gray-600 leading-relaxed">
-                Cada par que vendemos cuenta una historia, y nosotros somos los
-                narradores de esas historias que caminaron por las calles del
-                mundo.
+                Cada par que vendemos cuenta una historia, y nosotros somos los narradores 
+                de esas historias que caminaron por las calles del mundo.
               </p>
             </div>
             <div className="relative h-80 bg-gray-200 rounded-lg overflow-hidden">
-              <img
-                src="https://images.pexels.com/photos/2529148/pexels-photo-2529148.jpeg?auto=compress&cs=tinysrgb&w=800"
+              <Image
+                src="/assets/imgs/store-vintage.jpg"
                 alt="Tienda vintage"
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
               />
             </div>
           </div>
@@ -55,8 +54,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Autenticidad</h3>
               <p className="text-gray-600">
-                Cada producto es verificado y garantizamos su originalidad y
-                calidad.
+                Cada producto es verificado y garantizamos su originalidad y calidad.
               </p>
             </div>
             <div className="text-center p-6">
@@ -65,8 +63,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Pasión</h3>
               <p className="text-gray-600">
-                Vivimos y respiramos la cultura sneaker, compartiendo ese amor
-                contigo.
+                Vivimos y respiramos la cultura sneaker, compartiendo ese amor contigo.
               </p>
             </div>
             <div className="text-center p-6">
@@ -75,8 +72,7 @@ export default function About() {
               </div>
               <h3 className="text-xl font-semibold mb-3">Comunidad</h3>
               <p className="text-gray-600">
-                Creamos conexiones entre personas que comparten el amor por el
-                estilo retro.
+                Creamos conexiones entre personas que comparten el amor por el estilo retro.
               </p>
             </div>
           </div>
@@ -91,18 +87,14 @@ export default function About() {
               ¿Tenés alguna consulta?
             </h2>
             <p className="text-lg text-gray-600">
-              Nos encanta escuchar de nuestra comunidad. Escribinos y te
-              respondemos pronto.
+              Nos encanta escuchar de nuestra comunidad. Escribinos y te respondemos pronto.
             </p>
           </div>
 
           <form className="bg-white rounded-lg shadow-lg p-8">
             <div className="grid md:grid-cols-2 gap-6 mb-6">
               <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-2">
                   Nombre *
                 </label>
                 <input
@@ -115,10 +107,7 @@ export default function About() {
                 />
               </div>
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-gray-700 mb-2"
-                >
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                   Email *
                 </label>
                 <input
@@ -133,10 +122,7 @@ export default function About() {
             </div>
 
             <div className="mb-6">
-              <label
-                htmlFor="subject"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="subject" className="block text-sm font-medium text-gray-700 mb-2">
                 Asunto
               </label>
               <input
@@ -149,10 +135,7 @@ export default function About() {
             </div>
 
             <div className="mb-6">
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-gray-700 mb-2"
-              >
+              <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
                 Mensaje *
               </label>
               <textarea

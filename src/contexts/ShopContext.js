@@ -1,109 +1,114 @@
 "use client";
 
-import { useState, useEffect, useContext, createContext, useCallback } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useCallback,
+} from "react";
 import axios from "axios";
+import Loading from "@/components/Loading";
 
-const AppContext = createContext();
+const ShopContext = createContext();
 
-export const AppContextProvider = ({ children }) => {
-  const [addToCart, setAddToCart] = useState([]);
+export const ShopContextProvider = ({ children }) => {
+  const [cart, setCart] = useState([]);
   const [products, setProducts] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [ProductDetail, setProductDetail] = useState();
+  const [product, setProduct] = useState({});
+  const [categoryProducts, setCategoryProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // funciones productos
+
+  const handleAddToCart = () => {
+    let productToAdd = {};
+    const findProduct = cart.find(
+      (productInCart) => productInCart._id === product._id
+    );
+
+    if (findProduct) {
+      productToAdd = { ...findProduct, qty: findProduct.qty + product.qty };
+    } else {
+      productToAdd = product;
+    }
+    const filteredCart = cart.filter(
+      (productInCart) => productInCart._id !== product._id
+    );
+    setCart([...cart, productToAdd]);
+    //setcart
+  };
+
   const getProducts = useCallback(async () => {
     try {
+      setLoading(true);
       const res = await axios.get("http://localhost:4000/products");
+      console.log("products", res.data);
       setProducts(res.data.products);
     } catch (error) {
       console.log(error);
+    } finally {
       setLoading(false);
     }
-  }, [])
+  }, []);
 
-  
-      const getProductsByCategory = async (categorySlug) => {
-        try {
-          setLoading(true);
-          const res = await axios.get(
-            `http://localhost:5000/api/categories/${categorySlug}`
-          );
-          setProducts(res.data.products);
-          setLoading(false)
-        } catch (error) {
-        console.error("Error al obtener productos de categoría", error);
-        setLoading(false);
-      };
+  const getOneProduct = useCallback(async (id) => {
+    try {
+      setLoading(true);
+      const res = await axios.get(`http://localhost:4000/products/${id}`); //llega por parámetro
+      console.log("product", res.data.product);
+      setProduct(res.data.product);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
+  }, []);
 
-    const getProductById = async (id) => {
-      try {
-        setLoading(true)
-        const res = await axios.get(`http://localhost:5000/api/products/${id}`);
-        setProductDetail(res.data.product);
-        setLoading(false)
-      } catch (error) {
-        console.error("Error al obetener producto", error);
-        setLoading(false) 
-      }
+  const getProductBycategory = useCallback(async (slug) => {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/products/category${slug}`
+      );
+      setCategoryProducts(res.data.products);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
+  }, []);
 
-    const getCategories = async () => {
-      try {
-        setLoading(true);
-        const res = await axios.get("http://localhost:5000/api/categories");
-        setCategories(res.data.categories);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error al obtener categorías", error);
-        setLoading(false);
-      }
-    };
+  useEffect(() => {
+    getProducts();
+  }, [getProducts]);
 
-    const handleAddToCart = ({ id, name, image }) => {
-      const isOnCart = addToCart.some((product) => product.id === id);
-
-      if (isOnCart) {
-        setAddToCart(addToCart.filter((product) => product.id !== id));
-        console.log(`Chau ${name} del carrito`);
-      } else {
-      setAddToCart([...addToCart, { id, name, image }]);
-      console.log(`Agregado ${name} al carrito`);
-    };
-  };
-
-  const isCart = (id) => addToCart.some((product) => product.id === id);
-
-  const cartQty = () => addToCart.length;
+  const cartQty = () => cart.length
 
   return (
-    <AppContext.Provider
+    <ShopContext.Provider
       value={{
-        addToCart,
-        handleAddToCart,
-        isCart,
-        cartQty,
         products,
-        ProductDetail,
-        categories,
+        product,
+        cart,
+        cartQty,
+        handleAddToCart,
         loading,
         getProducts,
-        getProductsByCategory,
-        getProductById,
-        getCategories,
+        getOneProduct,
+        getProductBycategory,
+        categoryProducts,
       }}
     >
       {children}
-    </AppContext.Provider>
+    </ShopContext.Provider>
   );
 };
 
-export const useAppContext = () => {
-  const context = useContext(AppContext);
+export const useShopContext = () => {
+  const context = useContext(ShopContext);
   if (!context) {
-    throw new Error("useAppContext debe usarse dentro de AppContextProvider");
+    throw new Error("useShopContext must be use within a ShopContextProvider");
   }
   return context;
 };

@@ -1,12 +1,14 @@
 import Hero from "@/components/Hero";
-import ShopGrid from "@/components/ShopGrid";
+import ProductCarousel from "@/components/ProductCarousel";
+import BrandLogos from "@/components/BrandLogos";
 import ShopFeatures from "@/components/ShopFeatures";
 
 export default function Home() {
   return (
     <main>
       <Hero />
-      <ShopGrid />
+      <ProductCarousel />
+      <BrandLogos />
       <ShopFeatures />
     </main>
   );

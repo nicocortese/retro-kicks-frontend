@@ -1,37 +1,23 @@
+import { FiTruck, FiHeadphones, FiRefreshCw, FiShield } from "react-icons/fi";
+
 const features = [
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 17v-2H5v2a2 2 0 002 2h10a2 2 0 002-2v-2h-4v2M3 13h18l-3-6H6l-3 6z" />
-      </svg>
-    ),
+    icon: <FiTruck className="w-8 h-8" />,
     title: "Envíos Gratis",
     description: "Envíos GRATIS a todo el país",
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18.364 5.636a9 9 0 11-12.728 0M12 3v9" />
-      </svg>
-    ),
+    icon: <FiHeadphones className="w-8 h-8" />,
     title: "Soporte 24/7",
     description: "Atención las 24 horas, los 7 días de la semana",
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v16h16V4H4zm4 8h8m-8 4h8M8 8h8" />
-      </svg>
-    ),
+    icon: <FiRefreshCw className="w-8 h-8" />,
     title: "Devolución en 30 días",
     description: "Devolvé tu compra dentro de los 30 días",
   },
   {
-    icon: (
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 11c0 1.104-.895 2-2 2s-2-.896-2-2 .895-2 2-2 2 .896 2 2zm0 0h8m-8 0V3m0 8v12" />
-      </svg>
-    ),
+    icon: <FiShield className="w-8 h-8" />,
     title: "Pago 100% Seguro",
     description: "Protección en todas tus compras",
   },

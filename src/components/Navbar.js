@@ -1,99 +1,200 @@
 "use client";
 
+import { FiSearch, FiShoppingCart, FiMenu, FiX, FiChevronDown, FiChevronRight } from 'react-icons/fi';
 import Link from "next/link";
+import { useState, useEffect } from 'react';
 
 const Navbar = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleSearch = () => {
+    setIsSearchOpen(!isSearchOpen);
+  };
+
+  // Cerrar menús al hacer scroll
+  useEffect(() => {
+    const handleScroll = () => {
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
+      if (isSearchOpen) {
+        setIsSearchOpen(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [isMenuOpen, isSearchOpen]);
+
+  // Cerrar menús al redimensionar ventana
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        if (isMenuOpen) setIsMenuOpen(false);
+        if (isSearchOpen) setIsSearchOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [isMenuOpen, isSearchOpen]);
+
   return (
-    <div className="flex justify-between items-center fixed top-0 bg-[#1a1a1a] w-full z-50 px-8 h-16">
-      <p className="logoFont text-[#FFEFEF] font-bold text-4xl">LOGO PÁGINA</p>
-
-      <nav className="flex justify-center flex-grow">
-        <ul className="flex items-center gap-8 text-[#FFEFEF] font-medium text-[16px] tracking-wider">
-          <li className="text-[#D64541]">
-            <Link href="/">HOME</Link>
-          </li>
-
-          <li className="flex items-center gap-1 cursor-pointer">
-            <Link href="/">SHOP</Link>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+    <>
+      <div className="fixed top-0 bg-[#1a1a1a] w-full z-50 px-4 md:px-8 h-16">
+        <div className="flex justify-between items-center h-full max-w-7xl mx-auto">
+          {/* Mobile: Hamburger | Desktop: Logo */}
+          <div className="flex items-center">
+            {/* Botón hamburguesa - solo mobile */}
+            <button
+              onClick={toggleMenu}
+              className="md:hidden flex items-center justify-center w-8 h-8 focus:outline-none focus:ring-2 focus:ring-[#D64541] rounded mr-4"
+              aria-expanded={isMenuOpen}
+              aria-label="Toggle navigation menu"
             >
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </li>
+              {isMenuOpen ? (
+                <FiX className="w-6 h-6 text-[#FFEFEF]" />
+              ) : (
+                <FiMenu className="w-6 h-6 text-[#FFEFEF]" />
+              )}
+            </button>
 
-          <li className="flex items-center gap-1 cursor-pointer">
-            <Link href="/">BRANDS</Link>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              viewBox="0 0 20 20"
-              fill="currentColor"
+            {/* Logo - centrado en mobile, izquierda en desktop */}
+            <Link href="/CheckoutContainer" className="logoFont text-[#FFEFEF] font-bold text-2xl md:text-4xl">
+              LOGO PÁGINA
+            </Link>
+          </div>
+
+          {/* Navegación desktop - centrada */}
+          <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
+            <ul className="flex items-center gap-8 text-[#FFEFEF] font-medium text-[16px] tracking-wider">
+              <li className="text-[#D64541] hover:text-[#FF5B57] transition-colors duration-300">
+                <Link href="/">HOME</Link>
+              </li>
+
+              <li className="flex items-center gap-1 cursor-pointer hover:text-[#D64541] transition-colors duration-300 group">
+                <Link href="/">SHOP</Link>
+                <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
+              </li>
+
+              <li className="flex items-center gap-1 cursor-pointer hover:text-[#D64541] transition-colors duration-300 group">
+                <Link href="/">BRANDS</Link>
+                <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
+              </li>
+
+              <li className="hover:text-[#D64541] transition-colors duration-300">
+                <Link href="/about">ABOUT US</Link>
+              </li>
+
+              <li className="hover:text-[#D64541] transition-colors duration-300">
+                <Link href="/blog">BLOG</Link>
+              </li>
+            </ul>
+          </nav>
+
+          {/* Acciones - Desktop: Búsqueda + Carrito | Mobile: Iconos */}
+          <div className="flex items-center gap-4">
+            {/* Desktop: Barra de búsqueda completa */}
+            <div className="hidden md:flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-2 w-[280px]">
+              <FiSearch className="h-5 w-5 cursor-pointer" />
+              <input
+                type="text"
+                placeholder="BUSCAR"
+                className="outline-none text-sm w-full pl-2 tracking-widest bg-transparent"
+              />
+            </div>
+
+            {/* Mobile: Solo icono de búsqueda */}
+            <button 
+              onClick={toggleSearch}
+              className="md:hidden p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors"
             >
-              <path
-                fillRule="evenodd"
-                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              />
-            </svg>
-          </li>
+              <FiSearch className="h-6 w-6" />
+            </button>
 
-          <li>
-            <Link href="/">ABOUT US</Link>
-          </li>
-
-          <li>
-            <Link href="/">BLOG</Link>
-          </li>
-        </ul>
-      </nav>
-
-      <div className="flex items-center gap-4 ml-6">
-        <div className="flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-3 py-1 w-[350px]">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 cursor-pointer"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-            />
-          </svg>
-          <input
-            type="text"
-            placeholder="BUSCAR"
-            className="outline-none text-base w-full pl-2 tracking-widest"
-          />
+            {/* Carrito - visible en ambos */}
+            <button className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors">
+              <FiShoppingCart className="h-6 w-6" />
+            </button>
+          </div>
         </div>
-
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6 cursor-pointer"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="#FFEFEF"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M10 21a2 2 0 11-4 0 2 2 0 014 0zm10 0a2 2 0 11-4 0 2 2 0 014 0z"
-          />
-        </svg>
       </div>
-    </div>
+
+      {/* Barra de búsqueda móvil deslizante */}
+      <div className={`fixed top-16 right-0 w-80 bg-[#1a1a1a] z-40 transform transition-transform duration-300 ease-in-out md:hidden ${
+        isSearchOpen ? 'translate-x-0' : 'translate-x-full'
+      }`}>
+        <div className="p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="text-[#FFEFEF] font-medium text-lg">Buscar</h3>
+            <button 
+              onClick={toggleSearch}
+              className="p-1 text-[#FFEFEF] hover:text-[#D64541] transition-colors"
+            >
+              <FiX className="h-5 w-5" />
+            </button>
+          </div>
+          
+          <div className="flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-3">
+            <FiSearch className="h-5 w-5 cursor-pointer" />
+            <input
+              type="text"
+              placeholder="¿Qué estás buscando?"
+              className="outline-none text-sm w-full pl-2 bg-transparent"
+              autoFocus
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* Menú móvil de navegación */}
+      <div className={`fixed top-16 left-0 w-full bg-[#1a1a1a] z-40 transform transition-transform duration-300 ease-in-out md:hidden ${
+        isMenuOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        <div className="px-6 py-8">
+          {/* Solo navegación móvil - SIN búsqueda ni carrito */}
+          <ul className="flex flex-col gap-6 text-[#FFEFEF] font-medium text-lg tracking-wider">
+            <li className="text-[#D64541] hover:text-[#FF5B57] transition-colors duration-300">
+              <Link href="/" onClick={() => setIsMenuOpen(false)}>HOME</Link>
+            </li>
+
+            <li className="flex items-center gap-2 cursor-pointer hover:text-[#D64541] transition-colors duration-300">
+              <Link href="/" onClick={() => setIsMenuOpen(false)} className="text-lg">SHOP</Link>
+              <FiChevronRight className="h-5 w-5 transition-transform duration-300 group-hover:rotate-90" />
+            </li>
+
+            <li className="flex items-center gap-2 cursor-pointer hover:text-[#D64541] transition-colors duration-300">
+              <Link href="/" onClick={() => setIsMenuOpen(false)} className="text-lg">BRANDS</Link>
+              <FiChevronRight className="h-5 w-5 transition-transform duration-300 group-hover:rotate-90" />
+            </li>
+
+            <li className="hover:text-[#D64541] transition-colors duration-300">
+              <Link href="/about" onClick={() => setIsMenuOpen(false)}>ABOUT US</Link>
+            </li>
+
+            <li className="hover:text-[#D64541] transition-colors duration-300">
+              <Link href="/blog" onClick={() => setIsMenuOpen(false)}>BLOG</Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Overlay para cerrar menús */}
+      {(isMenuOpen || isSearchOpen) && (
+        <div 
+          className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"
+          onClick={() => {
+            setIsMenuOpen(false);
+            setIsSearchOpen(false);
+          }}
+        />
+      )}
+    </>
   );
 };
 

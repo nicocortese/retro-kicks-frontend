@@ -25,10 +25,10 @@ const Footer = () => {
           <Link href="/" className="hover:text-[#D64541] transition-colors">
             Brands
           </Link>
-          <Link href="/" className="hover:text-[#D64541] transition-colors">
+          <Link href="/about" className="hover:text-[#D64541] transition-colors">
             About Us
           </Link>
-          <Link href="/" className="hover:text-[#D64541] transition-colors">
+          <Link href="/blog" className="hover:text-[#D64541] transition-colors">
             Blog
           </Link>
         </div>

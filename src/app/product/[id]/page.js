@@ -1,10 +1,12 @@
-"use client";
+import React from 'react'
+import ProductDetail from '@/components/ProductDetail'
 
-import ProductDetail from "@/components/ProductDetail";
-
-export default function page({params}) {
+const page = async ({ params }) => {
+  const {id} =await params
   return (
-    <ProductDetail />
+    <ProductDetail id={id}/>
   )
 }
+
+export default page
 

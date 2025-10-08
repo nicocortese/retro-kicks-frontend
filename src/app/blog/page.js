@@ -1,10 +1,12 @@
+import Image from "next/image";
+
 export default function Blog() {
   const blogPosts = [
     {
       id: 1,
       title: "AND1: La Revolución del Streetball",
       excerpt: "Cómo una marca nacida en las canchas de Filadelfia cambió para siempre el mundo del basketball urbano.",
-      image: "https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "/assets/imgs/and1-basketball.jpg",
       date: "15 Enero 2025",
       readTime: "5 min",
       category: "Historia"
@@ -13,7 +15,7 @@ export default function Blog() {
       id: 2,
       title: "Converse All Star: 100 Años de Rebeldía",
       excerpt: "Desde las canchas de basketball hasta los escenarios de rock, la historia de un ícono cultural.",
-      image: "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "/assets/imgs/converse-allstar.jpg",
       date: "10 Enero 2025",
       readTime: "7 min",
       category: "Clásicos"
@@ -22,7 +24,7 @@ export default function Blog() {
       id: 3,
       title: "Vans: Del Skate a la Moda",
       excerpt: "La evolución de una marca californiana que conquistó el mundo desde las rampas de skate.",
-      image: "https://images.pexels.com/photos/1240892/pexels-photo-1240892.jpeg?auto=compress&cs=tinysrgb&w=800",
+      image: "/assets/imgs/vans-skate.jpg",
       date: "5 Enero 2025",
       readTime: "6 min",
       category: "Cultura"
@@ -48,11 +50,13 @@ export default function Blog() {
         <div className="max-w-6xl mx-auto">
           <div className="bg-white rounded-2xl shadow-xl overflow-hidden mb-16">
             <div className="md:flex">
-              <div className="md:w-1/2">
-                <image 
-                  src="https://images.pexels.com/photos/1464625/pexels-photo-1464625.jpeg?auto=compress&cs=tinysrgb&w=800" 
-                  alt="AND1 Basketball" 
-                  className="w-full h-64 md:h-full object-cover"
+              <div className="md:w-1/2 relative h-64 md:h-auto">
+                <Image
+                  src="/assets/imgs/and1-basketball.jpg"
+                  alt="AND1 Basketball"
+                  fill
+                  className="object-cover"
+                  priority
                 />
               </div>
               <div className="md:w-1/2 p-8 md:p-12">
@@ -69,7 +73,7 @@ export default function Blog() {
                   era una forma de arte urbano.
                 </p>
                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                  Lo que comenzó como camisetas con frases provocativas como im the bus driver, I take everyone to school 
+                  Lo que comenzó como camisetas con frases provocativas como &quot;I&apos;m the bus driver, I take everyone to school&quot; 
                   pronto se convirtió en un movimiento cultural. AND1 no solo vendía zapatillas, vendía actitud, 
                   estilo y la promesa de que cualquiera podía ser una leyenda en su propia cancha.
                 </p>
@@ -95,10 +99,11 @@ export default function Blog() {
               {blogPosts.slice(1).map((post) => (
                 <article key={post.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
                   <div className="relative h-48">
-                    <image 
+                    <Image 
                       src={post.image} 
                       alt={post.title}
-                      className="w-full h-full object-cover"
+                      fill
+                      className="object-cover"
                     />
                     <div className="absolute top-4 left-4">
                       <span className="bg-white/90 text-gray-800 px-3 py-1 rounded-full text-xs font-medium">
