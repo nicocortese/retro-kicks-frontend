@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
       <body className={`${bebasNeue.variable} ${archivo.variable} antialiased`}>
         <ShopContextProvider> 
         <Navbar />
-        <div className="flex-1">{children}</div>
+        {children}
         <Footer />
         </ShopContextProvider>
       </body>
