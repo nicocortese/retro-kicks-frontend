@@ -37,9 +37,38 @@ const ProductDetail = ({ id }) => {
   return (
     <section className="max-w-[1400px] mx-auto px-6 py-20">
       <div className="flex flex-col lg:flex-row gap-16">
-        {/* Columna Izquierda: Aquí irá la galería */}
+        {/* Columna Izquierda: Galería */}
         <div className="flex-1">
-          <p>Columna de Galería (Prueba)</p>
+          <div className="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
+            <Image
+              src={`/assets/imgs/${mainImage || primaryImage}`}
+              alt={product.name || "productos"}
+              fill
+              className="object-contain p-8"
+            />
+          </div>
+
+          <div className="flex gap-4 mt-6">
+            {product.images?.map((img, idx) => (
+              <div
+                key={idx}
+                onMouseEnter={() => setMainImage(img)}
+                className={`relative w-28 h-28 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 shadow-md hover:shadow-lg
+                  ${
+                    (mainImage || product.images[0]) === img
+                      ? "border-red-500 scale-105"
+                      : "border-gray-300 hover:border-red-400"
+                  }`}
+              >
+                <Image
+                  src={`/assets/imgs/${img}`}
+                  alt={`${product.name}-${idx}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Columna Derecha: Aquí irá la información */}
