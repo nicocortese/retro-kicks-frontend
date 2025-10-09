@@ -34,12 +34,20 @@ const ProductDetail = ({ id }) => {
     handleAddToCart(productToAdd);
   };
 
-  // Por ahora, solo devolvemos el return simple que sabemos que funciona
   return (
-    <div>
-      <h1>Página de Detalle de Producto</h1>
-      <p>Toda la lógica de arriba se ha cargado correctamente.</p>
-    </div>
+    <section className="max-w-[1400px] mx-auto px-6 py-20">
+      <div className="flex flex-col lg:flex-row gap-16">
+        {/* Columna Izquierda: Aquí irá la galería */}
+        <div className="flex-1">
+          <p>Columna de Galería (Prueba)</p>
+        </div>
+
+        {/* Columna Derecha: Aquí irá la información */}
+        <div className="flex-1 lg:pl-8">
+          <p>Columna de Información (Prueba)</p>
+        </div>
+      </div>
+    </section>
   );
 };
 
