@@ -26,23 +26,15 @@ const ProductDetail = ({ id }) => {
 
   const handleImageHover = (img) => setMainImage(img);
 
-  const addToCart = () => {
-    if (!selectedSize) {
-      alert("Seleccioná un talle antes de agregar al carrito.");
-      return;
-    }
+  const addToCart = (product) => {
+   const productToAdd = {
+    ...product,
+    qty: 1,
+   };
 
-    const productToAdd = {
-      _id: product._id,
-      name: product.name,
-      price: finalPrice,
-      image: primaryImage,
-      size: selectedSize,
-      qty: 1,
-    };
+   handleAddToCart(productToAdd)
+  }
 
-    handleAddToCart(productToAdd);
-  };
 
   return (
     <section className="max-w-[1400px] mx-auto px-6 py-20">
@@ -146,7 +138,7 @@ const ProductDetail = ({ id }) => {
 
           {/* Botón */}
           <button
-            onClick={() => handleAddToCart}
+            onClick={() => addToCart(product)}
             className="mt-10 w-full px-8 py-5 rounded-xl bg-[#d64541] text-white font-bold text-lg hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
           >
             Agregar al carrito
