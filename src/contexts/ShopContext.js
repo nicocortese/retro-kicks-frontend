@@ -21,22 +21,22 @@ export const ShopContextProvider = ({ children }) => {
 
   // funciones productos
 
-  const handleAddToCart = () => {
-    let productToAdd = {};
+  const handleAddToCart = (product) => {
+    let productToAdd = {}; //se inicializa en vacío y despues se llena
     const findProduct = cart.find(
       (productInCart) => productInCart._id === product._id
     );
 
     if (findProduct) {
-      productToAdd = { ...findProduct, qty: findProduct.qty + product.qty };
+      productToAdd = { ...findProduct, qty: findProduct.qty + product.qty }; //sobreescribe qty
     } else {
       productToAdd = product;
     }
     const filteredCart = cart.filter(
       (productInCart) => productInCart._id !== product._id
     );
-    setCart([...cart, productToAdd]);
-    //setcart
+    setCart([...filteredCart, productToAdd]);
+    //obtengo lo que ya tenia y le agrego algo nuevo
   };
 
   const getProducts = useCallback(async () => {
