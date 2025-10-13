@@ -38,6 +38,19 @@ body {
   grid-template-columns: repeat(5, 1fr);
 }
 
+.slick-track {
+  display: flex !important;
+  align-items: stretch !important;
+}
+
+.slick-slide {
+  height: auto !important;
+}
+
+.slick-slide > div {
+  height: 100%;
+}
+
 @media screen and (max-width: 768px) {
   .grid {
     gap: 0;

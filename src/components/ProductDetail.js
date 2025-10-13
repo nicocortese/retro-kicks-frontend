@@ -3,6 +3,7 @@
 import { useShopContext } from "@/contexts/ShopContext";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import Loading from "@/components/Loading";
 
 const ProductDetail = ({ id }) => {
