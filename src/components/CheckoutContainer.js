@@ -1,31 +1,37 @@
 "use client";
 
 import { useShopContext } from "@/contexts/ShopContext";
+import { CheckoutForm } from "./FormCheckout";
 const CheckoutContainer = () => {
   const { cart } = useShopContext();
 
-  const handlePlaceOrder = () => {
-    
-  }
+  const handlePlacerOrder = () => {
+    console.log("mi orden");
+  };
 
   return (
-    <section className="max-w-[1200px] my-0 mx-auto pt-20 py-3">
-    <div className="grid grid-cols-12">
-      <div className="col-span-6 flex justify-center items-center">
-        FORM USER
-        </div>
+    <section className="max-w-[1200px] my-0 mx-auto py-30">
+      <div className="grid grid-cols-12">
         <div className="col-span-6 flex flex-col justify-center items-start">
-          <h2>PEDIDO</h2>
-      {cart.map((product) => (
-        <div key={product._id} className="border-8 border-solid border-red-500 p-2 w-100">
-          <h3 className="pt-20 ">{product.name}</h3>
-          <p className="">Cantidad: {product.qty}</p>
+          <CheckoutForm />
         </div>
-      ))}
-    </div>
-    </div>
+        <div className="col-span-6">
+          <h2>PEDIDO</h2>
+          <div>
+            {cart.map((product) => (
+              <div
+                key={product._id}
+                className="border-4 border-solid border-red-400 p-2 m-2 w-100"
+              >
+                <h3>{product.name}</h3>
+                <p>Cantidad: {product.qty}</p>
+              </div>
+            ))}
+          </div>
+          <button onClick={() => handlePlacerOrder()}>Place Order</button>
+        </div>
+      </div>
     </section>
-  );
+  )
 };
-
 export default CheckoutContainer;
