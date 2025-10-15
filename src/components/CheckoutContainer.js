@@ -3,17 +3,21 @@
 import { useShopContext } from "@/contexts/ShopContext";
 import { CheckoutForm } from "./FormCheckout";
 const CheckoutContainer = () => {
-  const { cart } = useShopContext();
+  const { cart, addOrder } = useShopContext();
 
   const handlePlacerOrder = () => {
     console.log("mi orden");
   };
 
+  const handleAddOrder = (values) => {
+  addOrder(orderValues);
+};
+
   return (
     <section className="max-w-[1200px] my-0 mx-auto py-30">
       <div className="grid grid-cols-12">
         <div className="col-span-6 flex flex-col justify-center items-start">
-          <CheckoutForm />
+          <CheckoutForm handleAddOrder={handleAddOrder} />
         </div>
         <div className="col-span-6">
           <h2>PEDIDO</h2>

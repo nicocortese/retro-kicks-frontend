@@ -12,7 +12,7 @@ function validateEmail(value) {
   return error;
 }
 
-function validateUsername(value) {
+function validateName(value) {
   let error;
   if (!value) {
     error = "El nombre es requerido";
@@ -20,38 +20,69 @@ function validateUsername(value) {
   return error;
 }
 
-export const CheckoutForm = () => (
+function validateSurname(value) {
+  let error;
+  if (!value) {
+    error = "El apellido es requerido";
+  }
+  return error;
+}
+
+export const CheckoutForm = ({handleAddOrder}) => (
   <div className="flex items-center justify-center">
     <div className="bg-[#1a1a1a] p-10 rounded-2xl shadow-2xl w-full max-w-md mx-auto">
-      <h1 className="text-3xl font-bold mb-6 text-[#d64541] tracking-wide uppercase text-center">
+      <h2 className="text-3xl font-bold mb-6 text-[#d64541] tracking-wide uppercase text-center">
         Datos del comprador
-      </h1>
+      </h2>
 
       <Formik
-        initialValues={{ username: "", email: "" }}
+        initialValues={{
+          name: "", // 👈 Siempre definidos
+          surname: "",
+          email: "",
+        }}
         onSubmit={(values) => {
           console.log("Datos del formulario:", values);
+          handleAddOrder(values);
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, values }) => (
           <Form className="flex flex-col gap-4">
             <div>
               <label
-                htmlFor="username"
-                className="block text-sm mb-2 font-semibold  text-[#ffefef]"
+                htmlFor="name"
+                className="block text-sm mb-2 font-semibold text-[#ffefef]"
               >
                 Nombre
               </label>
               <Field
-                name="username"
-                validate={validateUsername}
+                name="name"
+                validate={validateName}
+                value={values.name || ""}
                 required
                 className="w-full px-4 py-3 rounded-lg bg-[#272626] border border-[#ffefef] focus:border-[#d64541] focus:outline-none text-[#ffefef]"
               />
-              {errors.username && touched.username && (
-                <div className="text-red-400 text-sm mt-1">
-                  {errors.username}
-                </div>
+              {errors.name && touched.name && (
+                <div className="text-red-400 text-sm mt-1">{errors.name}</div>
+              )}
+            </div>
+
+            <div>
+              <label
+                htmlFor="surname"
+                className="block text-sm mb-2 font-semibold text-[#ffefef]"
+              >
+                Apellido
+              </label>
+              <Field
+                name="surname"
+                validate={validateSurname}
+                value={values.surname || ""}
+                required
+                className="w-full px-4 py-3 rounded-lg bg-[#272626] border border-[#ffefef] focus:border-[#d64541] focus:outline-none text-[#ffefef]"
+              />
+              {errors.surname && touched.surname && (
+                <div className="text-red-400 text-sm mt-1">{errors.surname}</div>
               )}
             </div>
 
@@ -66,6 +97,7 @@ export const CheckoutForm = () => (
                 name="email"
                 type="email"
                 validate={validateEmail}
+                value={values.email || ""}
                 required
                 className="w-full px-4 py-3 rounded-lg bg-[#272626] border border-[#ffefef] focus:border-[#d64541] focus:outline-none text-[#ffefef]"
               />

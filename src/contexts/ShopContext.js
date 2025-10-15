@@ -85,6 +85,28 @@ export const ShopContextProvider = ({ children }) => {
 
   const cartQty = () => cart.length
 
+  const addOrder = async (userValues) => {
+
+    const reducedCart = cart.map(product => {
+      const prod = {
+        name: product.name,
+        _id: product._id,
+        qty: product.qty
+      }
+      
+      return
+    })
+
+    const orderValues = {
+    user: userValues,
+    products: cart
+  }
+    console.log("mi orden es:", order)
+  }
+
+//POST a API
+//
+//
   return (
     <ShopContext.Provider
       value={{
@@ -98,6 +120,7 @@ export const ShopContextProvider = ({ children }) => {
         getOneProduct,
         getProductBycategory,
         categoryProducts,
+        addOrder,
       }}
     >
       {children}
