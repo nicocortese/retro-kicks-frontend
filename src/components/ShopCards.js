@@ -16,21 +16,21 @@ const ShopCards = ({ product }) => {
 
   return (
     <article
-      className="relative group rounded-xl border shadow hover:shadow-xl transition overflow-hidden"
+      className="relative group rounded-xl border shadow hover:shadow-xl transition overflow-hidden flex flex-col h-full"
       style={{
         backgroundColor: `rgb(var(--card-bg-rgb))`,
         color: `rgb(var(--card-text-rgb))`,
       }}
     >
       {/* Imagen */}
-      <div className="relative w-full h-60">
+      <div className="relative w-full aspect-square flex items-center justify-center overflow-hidden">
         {primaryImage ? (
         <Image
           src={`/assets/imgs/${primaryImage}`}
           alt={`Imagen de ${name}`}
           width={400}
           height={400}
-          className="object-cover rounded-xl transition-transform duration-300 group-hover:scale-105"
+          className="object-contain p-4 rounded-xl transition-transform duration-300 group-hover:scale-105"
         />
         ) : (
           <div className="flex items-center justify-center h-full text-center p-4 bg-gray-100 text-gray-500 font-semibold">
@@ -47,10 +47,10 @@ const ShopCards = ({ product }) => {
       )}
 
       {/* Info */}
-      <div className="p-4">
-        <h3 className="font-semibold text-lg truncate">{name}</h3>
+      <div className="p-4 flex flex-col flex-1">
+        <h3 className="font-semibold text-lg">{name}</h3>
 
-        <div className="flex items-center gap-2 mt-2">
+        <div className="flex items-center gap-2 mt-auto">
           {discount && (
             <span className="line-through text-gray-400 text-sm">${price}</span>
           )}
