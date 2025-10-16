@@ -27,7 +27,7 @@ const Navbar = () => {
   useEffect(() => {
     const processProductData = async () => {
       try {
-        const res = await axios.get("http://localhost:4000/products");
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`);
         const products = res.data.products || [];
         const allStyles = products.map((p) => p.style).filter(Boolean);
         const uniqueStyles = [...new Set(allStyles)];

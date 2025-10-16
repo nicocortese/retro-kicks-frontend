@@ -22,7 +22,7 @@ const ProductGridPage = ({
       setLoading(true);
       try {
         // 🔹 1. Obtenemos todos los productos
-        const res = await axios.get("http://localhost:4000/products");
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`);
         const allProducts = res.data.products || [];
 
         // 🔹 2. Filtramos en el frontend
