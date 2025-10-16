@@ -24,29 +24,40 @@ const ProductCarousel = () => {
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
-        }
+        },
       },
       {
         breakpoint: 768,
         settings: {
           slidesToShow: 2,
           slidesToScroll: 1,
-        }
+        },
       },
       {
         breakpoint: 480,
         settings: {
           slidesToShow: 1,
           slidesToScroll: 1,
-        }
-      }
-    ]
+        },
+      },
+    ],
   };
 
   if (loading) return <Loading />;
 
   return (
     <section className="max-w-[1200px] mx-auto px-4 py-10">
+      <style>{`
+        .slick-dots li.slick-active button:before {
+          color: #D64541 !important;
+          opacity: 1 !important;
+        }
+        .slick-dots li button:before {
+          color: #9ca3af !important; /* Un gris para los inactivos */
+          font-size: 10px !important;
+        }
+      `}</style>
+
       <div className="mb-6">
         <h2 className="text-2xl font-bold text-[rgb(var(--foreground-rgb))] text-center">
           ¡Descubre las ofertas de hoy!

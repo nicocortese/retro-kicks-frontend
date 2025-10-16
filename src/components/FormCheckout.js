@@ -28,7 +28,7 @@ function validateSurname(value) {
   return error;
 }
 
-export const CheckoutForm = ({handleAddOrder}) => (
+export const CheckoutForm = ({ handleAddOrder }) => (
   <div className="flex items-center justify-center">
     <div className="bg-[#1a1a1a] p-10 rounded-2xl shadow-2xl w-full max-w-md mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-[#d64541] tracking-wide uppercase text-center">
@@ -82,7 +82,9 @@ export const CheckoutForm = ({handleAddOrder}) => (
                 className="w-full px-4 py-3 rounded-lg bg-[#272626] border border-[#ffefef] focus:border-[#d64541] focus:outline-none text-[#ffefef]"
               />
               {errors.surname && touched.surname && (
-                <div className="text-red-400 text-sm mt-1">{errors.surname}</div>
+                <div className="text-red-400 text-sm mt-1">
+                  {errors.surname}
+                </div>
               )}
             </div>
 

@@ -7,17 +7,22 @@ import {
   FiX,
   FiChevronDown,
   FiChevronRight,
+  FiHeart,
 } from "react-icons/fi";
 import Link from "next/link";
+import Image from "next/image";
+import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchOpenDesktop, setIsSearchOpenDesktop] = useState(false);
   const [categories, setCategories] = useState([]);
   const [brands, setBrands] = useState([]);
   const [openMobileSubMenu, setOpenMobileSubMenu] = useState(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     const processProductData = async () => {
@@ -52,10 +57,11 @@ const Navbar = () => {
     const handleScroll = () => {
       if (isMenuOpen) setIsMenuOpen(false);
       if (isSearchOpen) setIsSearchOpen(false);
+      if (isSearchOpenDesktop) setIsSearchOpenDesktop(false);
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [isMenuOpen, isSearchOpen]);
+  }, [isMenuOpen, isSearchOpen, isSearchOpenDesktop]);
 
   // Cerrar menús al cambiar tamaño de pantalla
   useEffect(() => {
@@ -86,23 +92,37 @@ const Navbar = () => {
                 <FiMenu className="w-6 h-6 text-[#FFEFEF]" />
               )}
             </button>
-            <Link
-              href="/"
-              className="logoFont text-[#FFEFEF] font-bold text-2xl md:text-4xl"
-            >
-              LOGO PÁGINA
+            <Link href="/" className="flex items-center">
+              <Image
+                src="/assets/imgs/logo.png"
+                alt="Logo"
+                width={120}
+                height={40}
+                className="h-8 md:h-10 w-auto"
+              />
             </Link>
           </div>
 
           {/* Navegación Desktop */}
           <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
             <ul className="flex items-center gap-8 text-[#FFEFEF] font-medium text-[16px] tracking-wider">
-              <li className="text-[#D64541] hover:text-[#FF5B57] transition-colors duration-300">
+              <li
+                className={`transition-colors duration-300 ${
+                  pathname === "/" ? "text-[#D64541]" : "hover:text-[#D64541]"
+                }`}
+              >
                 <Link href="/">HOME</Link>
               </li>
 
               {/* SHOP Dropdown */}
-              <li className="relative group cursor-pointer">
+              <li
+                className={`relative group cursor-pointer ${
+                  pathname.startsWith("/shop") ||
+                  pathname.startsWith("/category/")
+                    ? "text-[#D64541]"
+                    : ""
+                }`}
+              >
                 <div className="flex items-center gap-1 hover:text-[#D64541] transition-colors duration-300">
                   <span>SHOP</span>
                   <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
@@ -127,7 +147,11 @@ const Navbar = () => {
               </li>
 
               {/* BRANDS Dropdown */}
-              <li className="relative group cursor-pointer">
+              <li
+                className={`relative group cursor-pointer ${
+                  pathname.startsWith("/brands/") ? "text-[#D64541]" : ""
+                }`}
+              >
                 <div className="flex items-center gap-1 hover:text-[#D64541] transition-colors duration-300">
                   <span>BRANDS</span>
                   <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
@@ -151,26 +175,56 @@ const Navbar = () => {
                 </div>
               </li>
 
-              <li className="hover:text-[#D64541] transition-colors duration-300">
+              <li
+                className={`transition-colors duration-300 ${
+                  pathname === "/about"
+                    ? "text-[#D64541]"
+                    : "hover:text-[#D64541]"
+                }`}
+              >
                 <Link href="/about">ABOUT US</Link>
               </li>
-              <li className="hover:text-[#D64541] transition-colors duration-300">
+              <li
+                className={`transition-colors duration-300 ${
+                  pathname === "/blog"
+                    ? "text-[#D64541]"
+                    : "hover:text-[#D64541]"
+                }`}
+              >
                 <Link href="/blog">BLOG</Link>
               </li>
             </ul>
           </nav>
 
-          {/* Acciones (search + cart) */}
+          {/* Acciones (search + wishlist + cart) */}
           <div className="flex items-center gap-4">
-            {/* Desktop search */}
-            <div className="hidden md:flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-2 w-[280px]">
-              <FiSearch className="h-5 w-5 cursor-pointer" />
-              <input
-                type="text"
-                placeholder="BUSCAR"
-                className="outline-none text-sm w-full pl-2 tracking-widest bg-transparent"
-              />
-            </div>
+            {/* Desktop search - Colapsable */}
+            {!isSearchOpenDesktop ? (
+              <button
+                onClick={() => setIsSearchOpenDesktop(true)}
+                className="hidden md:block p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
+              >
+                <FiSearch className="h-6 w-6" />
+              </button>
+            ) : (
+              <div className="hidden md:flex items-center gap-2">
+                <div className="flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-2 w-[280px]">
+                  <FiSearch className="h-5 w-5 cursor-pointer" />
+                  <input
+                    type="text"
+                    placeholder="BUSCAR"
+                    autoFocus
+                    className="outline-none text-sm w-full pl-2 tracking-widest bg-transparent"
+                  />
+                </div>
+                <button
+                  onClick={() => setIsSearchOpenDesktop(false)}
+                  className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
+                >
+                  <FiX className="h-5 w-5" />
+                </button>
+              </div>
+            )}
 
             {/* Mobile search */}
             <button
@@ -179,6 +233,13 @@ const Navbar = () => {
             >
               <FiSearch className="h-6 w-6" />
             </button>
+
+            {/* Wishlist */}
+            <Link href="/wishlist">
+              <button className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer">
+                <FiHeart className="h-6 w-6" />
+              </button>
+            </Link>
 
             {/* Cart */}
             <Link href="/checkout">
@@ -226,14 +287,21 @@ const Navbar = () => {
       >
         <div className="px-6 py-8">
           <ul className="flex flex-col gap-6 text-[#FFEFEF] font-medium text-lg tracking-wider">
-            <li>
+            <li className={pathname === "/" ? "text-[#D64541]" : ""}>
               <Link href="/" onClick={() => setIsMenuOpen(false)}>
                 HOME
               </Link>
             </li>
 
             {/* SHOP submenu */}
-            <li>
+            <li
+              className={
+                pathname.startsWith("/shop") ||
+                pathname.startsWith("/category/")
+                  ? "text-[#D64541]"
+                  : ""
+              }
+            >
               <div
                 className="flex items-center justify-between cursor-pointer hover:text-[#D64541] transition-colors"
                 onClick={() => handleMobileSubMenuToggle("shop")}
@@ -263,7 +331,11 @@ const Navbar = () => {
             </li>
 
             {/* BRANDS submenu */}
-            <li>
+            <li
+              className={
+                pathname.startsWith("/brands/") ? "text-[#D64541]" : ""
+              }
+            >
               <div
                 className="flex items-center justify-between cursor-pointer hover:text-[#D64541] transition-colors"
                 onClick={() => handleMobileSubMenuToggle("brands")}
@@ -292,12 +364,12 @@ const Navbar = () => {
               )}
             </li>
 
-            <li>
+            <li className={pathname === "/about" ? "text-[#D64541]" : ""}>
               <Link href="/about" onClick={() => setIsMenuOpen(false)}>
                 ABOUT US
               </Link>
             </li>
-            <li>
+            <li className={pathname === "/blog" ? "text-[#D64541]" : ""}>
               <Link href="/blog" onClick={() => setIsMenuOpen(false)}>
                 BLOG
               </Link>

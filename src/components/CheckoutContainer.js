@@ -10,8 +10,8 @@ const CheckoutContainer = () => {
   };
 
   const handleAddOrder = (values) => {
-  addOrder(values);
-};
+    addOrder(values);
+  };
 
   return (
     <section className="max-w-[1200px] my-0 mx-auto py-30">
@@ -25,19 +25,17 @@ const CheckoutContainer = () => {
             {cart.map((product) => (
               <div
                 key={product._id}
-                className="border-4 border-solid border-red-400 p-2 m-2 w-100"
+                className="border-4 border-solid border-[#D64541] p-2 m-2 w-100"
               >
                 <h3>{product.name}</h3>
                 <p>Cantidad: {product.qty}</p>
               </div>
             ))}
           </div>
-          <div>
-            Total de la orden: {cartTotal()}
-          </div>
+          <div>Total de la orden: ${cartTotal().toLocaleString("es-AR")}</div>
         </div>
       </div>
     </section>
-  )
+  );
 };
 export default CheckoutContainer;
