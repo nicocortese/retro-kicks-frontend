@@ -43,7 +43,6 @@ export const ShopContextProvider = ({ children }) => {
     try {
       setLoading(true);
       const res = await axios.get("http://localhost:4000/products");
-      console.log("products", res.data);
       setProducts(res.data.products);
     } catch (error) {
       console.log(error);
@@ -81,12 +80,11 @@ export const ShopContextProvider = ({ children }) => {
 
   useEffect(() => {
     getProducts();
-  }, [getProducts]);
+  }, []);
 
   const cartQty = () => cart.length
 
   const addOrder = async (userValues) => {
-
     const reducedCart = cart.map(product => {
       const prod = {
         name: product.name,
@@ -94,14 +92,21 @@ export const ShopContextProvider = ({ children }) => {
         qty: product.qty
       }
       
-      return
+      return prod;
     })
 
     const orderValues = {
     user: userValues,
-    products: cart
+    products: reducedCart
   }
-    console.log("mi orden es:", order)
+    console.log("mi orden es:", orderValues)
+
+    try {
+      const response = await axios.post("http://localhost:4000/orders", orderValues)
+      console.log("data", response)
+    } catch (error) {
+      console.log("error", error)
+    }
   }
 
 //POST a API

@@ -10,7 +10,7 @@ const CheckoutContainer = () => {
   };
 
   const handleAddOrder = (values) => {
-  addOrder(orderValues);
+  addOrder(values);
 };
 
   return (
