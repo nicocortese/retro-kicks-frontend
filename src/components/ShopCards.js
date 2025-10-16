@@ -39,28 +39,10 @@ const ShopCards = ({ product }) => {
         )}
       </div>
 
-      {/* Badge de descuento */}
-      {discount && (
-        <span className="absolute top-3 left-3 bg-[#D64541] text-[#FFEFEF] text-sm font-bold px-2 py-1 rounded">
-          -{discount}%
-        </span>
-      )}
-
       {/* Info */}
       <div className="p-4 flex flex-col flex-1">
         <h3 className="font-semibold text-lg">{name}</h3>
-
-        <div className="flex items-center gap-2 mt-auto">
-          {discount && (
-            <span className="line-through text-gray-400 text-sm">${price}</span>
-          )}
-          <span
-            className="text-lg font-bold"
-            style={{ color: "rgb(var(--foreground-rgb))" }}
-          >
-            ${finalPrice}
-          </span>
-        </div>
+        <h4 className="font-bold text-lg">${product.price}</h4>
       </div>
 
       {/* Hover acciones - barra inferior */}
