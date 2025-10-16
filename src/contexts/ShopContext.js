@@ -42,7 +42,7 @@ export const ShopContextProvider = ({ children }) => {
   const getProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:4000/products");
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`);
       setProducts(res.data.products);
     } catch (error) {
       console.log(error);
@@ -54,7 +54,7 @@ export const ShopContextProvider = ({ children }) => {
   const getOneProduct = useCallback(async (id) => {
     try {
       setLoading(true);
-      const res = await axios.get(`http://localhost:4000/products/${id}`); //llega por parámetro
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`); //llega por parámetro
       console.log("product", res.data.product);
       setProduct(res.data.product);
     } catch (error) {
@@ -68,7 +68,7 @@ export const ShopContextProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `http://localhost:4000/products/category${slug}`
+        `${process.env.NEXT_PUBLIC_API_URL}/products/category${slug}`
       );
       setCategoryProducts(res.data.products);
     } catch (error) {
@@ -101,19 +101,19 @@ export const ShopContextProvider = ({ children }) => {
     const orderValues = {
       user: userValues,
       products: reducedCart,
-      total: cartTotal
+      total: cartTotal()
     };
     console.log("mi orden es:", orderValues);
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/orders",
+        `${process.env.NEXT_PUBLIC_API_URL}/orders`,
         orderValues
       );
 
       return true 
 
-      
+
       console.log("data", response);
     } catch (error) {
       console.log("error", error);
