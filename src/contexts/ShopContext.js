@@ -82,36 +82,49 @@ export const ShopContextProvider = ({ children }) => {
     getProducts();
   }, []);
 
-  const cartQty = () => cart.length
+  const cartQty = () => cart.length;
+
+  const cartTotal = () =>
+    cart.reduce((acc, product) => acc + product.qty + product.price, 0);
 
   const addOrder = async (userValues) => {
-    const reducedCart = cart.map(product => {
+    const reducedCart = cart.map((product) => {
       const prod = {
         name: product.name,
         _id: product._id,
-        qty: product.qty
-      }
-      
+        qty: product.qty,
+      };
+
       return prod;
-    })
+    });
 
     const orderValues = {
-    user: userValues,
-    products: reducedCart
-  }
-    console.log("mi orden es:", orderValues)
+      user: userValues,
+      products: reducedCart,
+      total: cartTotal
+    };
+    console.log("mi orden es:", orderValues);
 
     try {
-      const response = await axios.post("http://localhost:4000/orders", orderValues)
-      console.log("data", response)
-    } catch (error) {
-      console.log("error", error)
-    }
-  }
+      const response = await axios.post(
+        "http://localhost:4000/orders",
+        orderValues
+      );
 
-//POST a API
-//
-//
+      return true 
+
+      
+      console.log("data", response);
+    } catch (error) {
+      console.log("error", error);
+
+      return false 
+    }
+  };
+
+  //POST a API
+  //
+  //
   return (
     <ShopContext.Provider
       value={{
@@ -126,6 +139,7 @@ export const ShopContextProvider = ({ children }) => {
         getProductBycategory,
         categoryProducts,
         addOrder,
+        cartTotal,
       }}
     >
       {children}

@@ -3,7 +3,7 @@
 import { useShopContext } from "@/contexts/ShopContext";
 import { CheckoutForm } from "./FormCheckout";
 const CheckoutContainer = () => {
-  const { cart, addOrder } = useShopContext();
+  const { cart, addOrder, cartTotal } = useShopContext();
 
   const handlePlacerOrder = () => {
     console.log("mi orden");
@@ -32,7 +32,9 @@ const CheckoutContainer = () => {
               </div>
             ))}
           </div>
-          <button onClick={() => handlePlacerOrder()}>Place Order</button>
+          <div>
+            Total de la orden: {cartTotal()}
+          </div>
         </div>
       </div>
     </section>
