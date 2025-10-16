@@ -88,14 +88,14 @@ const ProductDetail = ({ id }) => {
               <div className="flex flex-col">
                 <span className="text-sm text-gray-500">Precio anterior</span>
                 <span className="line-through text-gray-400 text-xl">
-                  ${product.price.toLocaleString("es-AR")}
+                  ${product.price?.toLocaleString("es-AR")}
                 </span>
               </div>
             )}
             <div className="flex flex-col">
               <span className="text-sm text-gray-500">Precio actual</span>
               <span className="text-4xl font-bold text-gray-900">
-                ${finalPrice.toLocaleString("es-AR")}
+                ${finalPrice?.toLocaleString("es-AR")}
               </span>
             </div>
             {product.discount && (
