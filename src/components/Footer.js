@@ -1,13 +1,20 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const Footer = () => {
   return (
     <footer className="bg-[#1a1a1a] text-[#FFEFEF] pt-16 pb-10 w-full">
       <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="flex flex-col gap-4">
-          <p className="logoFont text-3xl font-bold">LOGO PÁGINA</p>
+          <Image
+            src="/assets/imgs/logo.png"
+            alt="Logo"
+            width={120}
+            height={40}
+            className="h-10 w-auto"
+          />
           <p className="text-sm text-[#FFEFEF]/70 leading-relaxed">
             Tu tienda de zapatillas retro favoritas. Estilo que trasciende
             generaciones.
@@ -15,7 +22,7 @@ const Footer = () => {
         </div>
 
         <div className="flex flex-col gap-3">
-          <h3 className="font-semibold mb-2">Enlaces</h3>
+          <h3 className="font-semibold mb-2">Navegación</h3>
           <Link href="/" className="hover:text-[#D64541] transition-colors">
             Home
           </Link>
@@ -25,16 +32,21 @@ const Footer = () => {
           <Link href="/" className="hover:text-[#D64541] transition-colors">
             Brands
           </Link>
-          <Link href="/about" className="hover:text-[#D64541] transition-colors">
+          <Link
+            href="/about"
+            className="hover:text-[#D64541] transition-colors">
             About Us
           </Link>
           <Link href="/blog" className="hover:text-[#D64541] transition-colors">
             Blog
           </Link>
+          <Link href="/wishlist" className="hover:text-[#D64541] transition-colors">
+            Wishlist
+          </Link>
         </div>
 
         <div className="flex flex-col gap-3">
-          <h3 className="font-semibold mb-2">Suscribite</h3>
+          <h3 className="font-semibold mb-2">Suscribite al Newsletter</h3>
           <p className="text-sm text-[#FFEFEF]/70 leading-relaxed">
             Recibí novedades y promociones
           </p>
@@ -56,7 +68,7 @@ const Footer = () => {
       </div>
 
       <div className="mt-12 border-t border-[#FFEFEF]/20 pt-6 text-center text-sm text-[#FFEFEF]/50">
-        © {new Date().getFullYear()} LOGO PÁGINA. Todos los derechos reservados.
+        © {new Date().getFullYear()} RETRO KICKS. Todos los derechos reservados.
       </div>
     </footer>
   );

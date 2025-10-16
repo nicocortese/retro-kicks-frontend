@@ -33,10 +33,8 @@ const ProductGridPage = ({
             (p) => p.style?.toLowerCase() === filterValue.toLowerCase()
           );
         } else if (filterType === "brand") {
-          productsToShow = allProducts.filter((p) =>
-            p.brand
-              ?.map((b) => b.toLowerCase())
-              .includes(filterValue.toLowerCase())
+          productsToShow = allProducts.filter(
+            (p) => p.brand?.toLowerCase() === filterValue.toLowerCase()
           );
         }
 
@@ -85,7 +83,7 @@ const ProductGridPage = ({
           </p>
           <Link
             href="/shop"
-            className="inline-block mt-6 px-6 py-3 bg-black text-white rounded hover:bg-gray-800 transition"
+            className="inline-block mt-6 px-6 py-3 bg-[#D64541] text-white rounded hover:bg-[#FF5B57] transition"
           >
             Ver todos los productos
           </Link>

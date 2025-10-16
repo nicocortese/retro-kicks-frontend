@@ -71,7 +71,7 @@ const ProductDetail = ({ id }) => {
 
         {/* Columna Derecha: Información Completa */}
         <div className="flex-1 lg:pl-8">
-          <p className="text-sm uppercase tracking-widest font-bold text-red-600 mb-2">
+          <p className="text-sm uppercase tracking-widest font-bold text-[#D64541] mb-2">
             {product.brand}
           </p>
           <h1 className="text-4xl font-bold text-gray-900 mb-2">
@@ -88,14 +88,14 @@ const ProductDetail = ({ id }) => {
               <div className="flex flex-col">
                 <span className="text-sm text-gray-500">Precio anterior</span>
                 <span className="line-through text-gray-400 text-xl">
-                  ${product.price}
+                  ${product.price.toLocaleString("es-AR")}
                 </span>
               </div>
             )}
             <div className="flex flex-col">
               <span className="text-sm text-gray-500">Precio actual</span>
               <span className="text-4xl font-bold text-gray-900">
-                ${finalPrice}
+                ${finalPrice.toLocaleString("es-AR")}
               </span>
             </div>
             {product.discount && (
@@ -120,8 +120,8 @@ const ProductDetail = ({ id }) => {
                     onClick={() => !disabled && setSelectedSize(size)}
                     className={`px-5 py-2 rounded-lg border-2 font-semibold transition ${
                       selectedSize === size
-                        ? "bg-red-600 text-white border-red-600"
-                        : "bg-white hover:bg-gray-50 border-gray-300 hover:border-red-400"
+                        ? "bg-[#D64541] text-white border-[#D64541]"
+                        : "bg-white hover:bg-gray-50 border-gray-300 hover:border-[#D64541]"
                     } ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
                   >
                     {size}
@@ -133,7 +133,7 @@ const ProductDetail = ({ id }) => {
           {/* Botón */}
           <button
             onClick={() => addToCart(product)}
-            className="mt-10 w-full px-8 py-5 rounded-xl bg-[#d64541] text-white font-bold text-lg hover:bg-red-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
+            className="mt-10 w-full px-8 py-5 rounded-xl bg-[#D64541] text-white font-bold text-lg hover:bg-[#FF5B57] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
           >
             Agregar al carrito
           </button>
@@ -149,20 +149,44 @@ const ProductDetail = ({ id }) => {
           {/* Información adicional */}
           <div className="mt-8 space-y-4">
             <div className="flex items-start gap-3 text-sm text-gray-700">
-              <svg className="w-5 h-5 text-green-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <svg
+                className="w-5 h-5 text-green-600 mt-0.5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
               </svg>
-              <span>Envío gratis en compras mayores a $50.000</span>
+              <span>Envío gratis en compras mayores a $200.000</span>
             </div>
             <div className="flex items-start gap-3 text-sm text-gray-700">
-              <svg className="w-5 h-5 text-green-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <svg
+                className="w-5 h-5 text-green-600 mt-0.5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
               </svg>
               <span>Devoluciones gratis dentro de los 30 días</span>
             </div>
             <div className="flex items-start gap-3 text-sm text-gray-700">
-              <svg className="w-5 h-5 text-green-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <svg
+                className="w-5 h-5 text-green-600 mt-0.5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
               </svg>
               <span>Garantía de autenticidad del 100%</span>
             </div>
