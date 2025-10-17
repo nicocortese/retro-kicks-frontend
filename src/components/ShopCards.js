@@ -58,7 +58,7 @@ const ShopCards = ({ product }) => {
       <div className="p-4 flex flex-col flex-1">
         <h3 className="font-semibold text-lg">{name}</h3>
         <h4 className="font-bold text-lg transition-opacity duration-300 group-hover:opacity-50">
-          ${product.price.toLocaleString("es-AR")}
+          ${product.price?.toLocaleString("es-AR")}
         </h4>
       </div>
     </article>
