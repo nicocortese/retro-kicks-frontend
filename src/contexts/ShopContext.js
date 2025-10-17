@@ -42,7 +42,9 @@ export const ShopContextProvider = ({ children }) => {
   const getProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`);
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/products`
+      );
       setProducts(res.data.products);
     } catch (error) {
       console.log(error);
@@ -54,7 +56,9 @@ export const ShopContextProvider = ({ children }) => {
   const getOneProduct = useCallback(async (id) => {
     try {
       setLoading(true);
-      const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products/${id}`); //llega por parámetro
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
+      ); //llega por parámetro
       console.log("product", res.data.product);
       setProduct(res.data.product);
     } catch (error) {
@@ -85,7 +89,10 @@ export const ShopContextProvider = ({ children }) => {
   const cartQty = () => cart.length;
 
   const cartTotal = () =>
-    cart.reduce((acc, product) => acc + product.qty + product.price, 0);
+    cart.reduce((acc, product) => acc + product.qty * product.price, 0);
+
+  const totalCartItems = () =>
+    cart.reduce((acc, product) => acc + product.qty, 0);
 
   const addOrder = async (userValues) => {
     const reducedCart = cart.map((product) => {
@@ -101,7 +108,7 @@ export const ShopContextProvider = ({ children }) => {
     const orderValues = {
       user: userValues,
       products: reducedCart,
-      total: cartTotal()
+      total: cartTotal(),
     };
     console.log("mi orden es:", orderValues);
 
@@ -111,14 +118,13 @@ export const ShopContextProvider = ({ children }) => {
         orderValues
       );
 
-      return true 
-
+      return true;
 
       console.log("data", response);
     } catch (error) {
       console.log("error", error);
 
-      return false 
+      return false;
     }
   };
 
@@ -140,6 +146,7 @@ export const ShopContextProvider = ({ children }) => {
         categoryProducts,
         addOrder,
         cartTotal,
+        totalCartItems,
       }}
     >
       {children}

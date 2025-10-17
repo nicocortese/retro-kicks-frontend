@@ -13,9 +13,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import { useShopContext } from "@/contexts/ShopContext";
 
 const Navbar = () => {
+  // 1. Obtenemos los datos y funciones del contexto global
+  const { products, totalCartItems } = useShopContext();
+  const itemsInCart = totalCartItems();
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSearchOpenDesktop, setIsSearchOpenDesktop] = useState(false);
@@ -24,23 +28,18 @@ const Navbar = () => {
   const [openMobileSubMenu, setOpenMobileSubMenu] = useState(null);
   const pathname = usePathname();
 
+  // 2. Usamos los 'products' del contexto para generar las categorías y marcas
   useEffect(() => {
-    const processProductData = async () => {
-      try {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`);
-        const products = res.data.products || [];
-        const allStyles = products.map((p) => p.style).filter(Boolean);
-        const uniqueStyles = [...new Set(allStyles)];
-        setCategories(uniqueStyles);
-        const allBrands = products.flatMap((p) => p.brand).filter(Boolean);
-        const uniqueBrands = [...new Set(allBrands)];
-        setBrands(uniqueBrands);
-      } catch (error) {
-        console.error("Error al cargar datos del Navbar:", error);
-      }
-    };
-    processProductData();
-  }, []);
+    if (products && products.length > 0) {
+      const allStyles = products.map((p) => p.style).filter(Boolean);
+      const uniqueStyles = [...new Set(allStyles)];
+      setCategories(uniqueStyles);
+
+      const allBrands = products.flatMap((p) => p.brand).filter(Boolean);
+      const uniqueBrands = [...new Set(allBrands)];
+      setBrands(uniqueBrands);
+    }
+  }, [products]); // Se ejecuta solo cuando los productos del contexto cargan o cambian
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -63,7 +62,6 @@ const Navbar = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMenuOpen, isSearchOpen, isSearchOpenDesktop]);
 
-  // Cerrar menús al cambiar tamaño de pantalla
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -73,7 +71,7 @@ const Navbar = () => {
     };
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, [isMenuOpen, isSearchOpen]);
+  }, []);
 
   return (
     <>
@@ -113,8 +111,6 @@ const Navbar = () => {
               >
                 <Link href="/">HOME</Link>
               </li>
-
-              {/* SHOP Dropdown */}
               <li
                 className={`relative group cursor-pointer ${
                   pathname.startsWith("/shop") ||
@@ -127,7 +123,7 @@ const Navbar = () => {
                   <span>SHOP</span>
                   <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
                 </div>
-                <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px]">
+                <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
                   {categories.length > 0 ? (
                     categories.map((cat) => (
                       <Link
@@ -145,8 +141,6 @@ const Navbar = () => {
                   )}
                 </div>
               </li>
-
-              {/* BRANDS Dropdown */}
               <li
                 className={`relative group cursor-pointer ${
                   pathname.startsWith("/brands/") ? "text-[#D64541]" : ""
@@ -156,7 +150,7 @@ const Navbar = () => {
                   <span>BRANDS</span>
                   <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
                 </div>
-                <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px]">
+                <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
                   {brands.length > 0 ? (
                     brands.map((brand) => (
                       <Link
@@ -174,7 +168,6 @@ const Navbar = () => {
                   )}
                 </div>
               </li>
-
               <li
                 className={`transition-colors duration-300 ${
                   pathname === "/about"
@@ -198,7 +191,6 @@ const Navbar = () => {
 
           {/* Acciones (search + wishlist + cart) */}
           <div className="flex items-center gap-4">
-            {/* Desktop search - Colapsable */}
             {!isSearchOpenDesktop ? (
               <button
                 onClick={() => setIsSearchOpenDesktop(true)}
@@ -225,27 +217,30 @@ const Navbar = () => {
                 </button>
               </div>
             )}
-
-            {/* Mobile search */}
             <button
               onClick={toggleSearch}
               className="md:hidden p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors"
             >
               <FiSearch className="h-6 w-6" />
             </button>
-
-            {/* Wishlist */}
-            <Link href="/wishlist">
-              <button className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer">
-                <FiHeart className="h-6 w-6" />
-              </button>
+            <Link
+              href="/wishlist"
+              className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
+            >
+              <FiHeart className="h-6 w-6" />
             </Link>
-
-            {/* Cart */}
-            <Link href="/checkout">
-              <button className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer">
-                <FiShoppingCart className="h-6 w-6" />
-              </button>
+            
+            {/* 3. Ícono del carrito con el contador dinámico */}
+            <Link
+              href="/checkout"
+              className="relative p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
+            >
+              <FiShoppingCart className="h-6 w-6" />
+              {itemsInCart > 0 && (
+                <span className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#D64541] rounded-full">
+                  {itemsInCart}
+                </span>
+              )}
             </Link>
           </div>
         </div>
@@ -292,8 +287,6 @@ const Navbar = () => {
                 HOME
               </Link>
             </li>
-
-            {/* SHOP submenu */}
             <li
               className={
                 pathname.startsWith("/shop") ||
@@ -329,8 +322,6 @@ const Navbar = () => {
                 </ul>
               )}
             </li>
-
-            {/* BRANDS submenu */}
             <li
               className={
                 pathname.startsWith("/brands/") ? "text-[#D64541]" : ""
@@ -363,7 +354,6 @@ const Navbar = () => {
                 </ul>
               )}
             </li>
-
             <li className={pathname === "/about" ? "text-[#D64541]" : ""}>
               <Link href="/about" onClick={() => setIsMenuOpen(false)}>
                 ABOUT US
