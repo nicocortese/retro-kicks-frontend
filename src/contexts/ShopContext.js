@@ -8,7 +8,6 @@ import {
   useCallback,
 } from "react";
 import axios from "axios";
-import Loading from "@/components/Loading";
 
 const ShopContext = createContext();
 
@@ -18,30 +17,32 @@ export const ShopContextProvider = ({ children }) => {
   const [product, setProduct] = useState({});
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // funciones productos
+  const [categories, setCategories] = useState([]);
 
   const handleAddToCart = (product) => {
-    const productUniqueId = product.uniqueId || product._id;
+    let productToAdd = {};
     const findProduct = cart.find(
-      (productInCart) => (productInCart.uniqueId || productInCart._id) === productUniqueId
+      (productInCart) => productInCart._id === product._id
     );
 
-    let productToAdd = {}; //se inicializa en vacío y despues se llena
-
     if (findProduct) {
-      productToAdd = { ...findProduct, qty: findProduct.qty + product.qty }; //sobreescribe qty
-    const updatedCart = cart.map((productInCart) => 
-    (productInCart.uniqueId || productInCart._id) === productUniqueId
-    ? productToAdd 
-    : productInCart
-  )
+      productToAdd = { ...findProduct, qty: findProduct.qty + product.qty };
+    } else {
+      productToAdd = product;
+    }
+    const filteredCart = cart.filter(
+      (productInCart) => productInCart._id !== product._id
+    );
+    setCart([...filteredCart, productToAdd]);
+  };
+
+  const handleRemoveFromCart = (productToRemove) => {
+    const updatedCart = cart.filter(
+      (productInCart) => productInCart._id !== productToRemove._id
+    );
     setCart(updatedCart);
-    //obtengo lo que ya tenia y le agrego algo nuevo
-  } else {
-    setCart([...cart, product]);
-  }
-  }
+  };
+
   const getProducts = useCallback(async () => {
     try {
       setLoading(true);
@@ -61,8 +62,7 @@ export const ShopContextProvider = ({ children }) => {
       setLoading(true);
       const res = await axios.get(
         `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
-      ); //llega por parámetro
-      console.log("product", res.data.product);
+      );
       setProduct(res.data.product);
     } catch (error) {
       console.log(error);
@@ -71,15 +71,27 @@ export const ShopContextProvider = ({ children }) => {
     }
   }, []);
 
+  const getCategories = useCallback(async () => {
+    try {
+      const res = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/categories`
+      );
+      setCategories(res.data.categories || []);
+    } catch (error) {
+      console.log("Error al cargar categorías:", error);
+    }
+  }, []);
+
   const getProductBycategory = useCallback(async (slug) => {
     setLoading(true);
     try {
       const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/category${slug}`
+        `${process.env.NEXT_PUBLIC_API_URL}/categories/${slug}`
       );
-      setCategoryProducts(res.data.products);
+      setCategoryProducts(res.data.products || []);
     } catch (error) {
       console.log(error);
+      setCategoryProducts([]);
     } finally {
       setLoading(false);
     }
@@ -87,7 +99,8 @@ export const ShopContextProvider = ({ children }) => {
 
   useEffect(() => {
     getProducts();
-  }, []);
+    getCategories();
+  }, [getProducts, getCategories]);
 
   const cartQty = () => cart.length;
 
@@ -113,7 +126,6 @@ export const ShopContextProvider = ({ children }) => {
       products: reducedCart,
       total: cartTotal(),
     };
-    console.log("mi orden es:", orderValues);
 
     try {
       const response = await axios.post(
@@ -122,8 +134,6 @@ export const ShopContextProvider = ({ children }) => {
       );
 
       return true;
-
-      console.log("data", response);
     } catch (error) {
       console.log("error", error);
 
@@ -131,17 +141,6 @@ export const ShopContextProvider = ({ children }) => {
     }
   };
 
-  const handleRemoveFromCart = (productToRemove) => {
-    const updateCart = cart.filter(
-      (productInCart) => (productInCart._uniqueId || productInCart._id)
-      !== (productToRemove.uniqueId || productToRemove._id)
-    );
-    setCart(updateCart);
-  }
-
-  //POST a API
-  //
-  //
   return (
     <ShopContext.Provider
       value={{
@@ -155,6 +154,7 @@ export const ShopContextProvider = ({ children }) => {
         getOneProduct,
         getProductBycategory,
         categoryProducts,
+        categories,
         addOrder,
         cartTotal,
         totalCartItems,
