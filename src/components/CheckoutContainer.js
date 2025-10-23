@@ -28,7 +28,7 @@ const CheckoutContainer = () => {
 
           <div className="flex flex-col">
             {cart.map((product, index) => (
-              <React.Fragment key={product._id}>
+              <React.Fragment key={`product._id}-${product.selectedSize || index}`}>
                 <div className="flex items-center gap-4 pt-4">
                   <Link href={`/product/${product._id}`}>
                   <div className="relative w-24 h-24 rounded-lg overflow-hidden shadow-lg bg-[#ffefef]">
@@ -54,14 +54,14 @@ const CheckoutContainer = () => {
                     </div>
 
                     <p className="text-sm text-[#272626]/70 mt-2">
-                      Cantidad: {product.qty}
+                      Talle: {product.selectedSize} - Cantidad: {product.qty}
                     </p>
                   </div>
                 </div>
 
                 <div className="flex justify-end mt-4">
                   <button
-                    onClick={() => handleRemoveFromCart(product._id)}
+                    onClick={() => handleRemoveFromCart(product)}
                     title="Eliminar producto"
                     className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#D64541] text-white hover:bg-red-700 transition-colors duration-200 shadow-md cursor-pointer"
                   >

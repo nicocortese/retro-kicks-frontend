@@ -21,16 +21,22 @@ const ProductDetail = ({ id }) => {
   const primaryImage = product.images?.[0] || null;
 
   const addToCart = (product) => {
+    if(!selectedSize) {
+      alert("Debes elegir un talle para agregar al carrito.");
+      return;
+    }
     const productToAdd = {
       ...product,
       qty: 1,
+      selectedSize,
+      uniqueId: `${product._id}-${selectedSize}`,
     };
     handleAddToCart(productToAdd);
   };
 
   return (
     <section className="max-w-[1400px] mx-auto px-6 py-20">
-      <div className="flex flex-cole lg:flex-row gap-16">
+      <div className="flex flex-col lg:flex-row gap-16">
         {/* IZQUIERDA */}
         <div className="flex-1">
           <div className="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl">
