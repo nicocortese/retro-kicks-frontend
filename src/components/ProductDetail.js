@@ -20,8 +20,6 @@ const ProductDetail = ({ id }) => {
 
   const primaryImage = product.images?.[0] || null;
 
-  const handleImageHover = (img) => setMainImage(img);
-
   const addToCart = (product) => {
     const productToAdd = {
       ...product,
