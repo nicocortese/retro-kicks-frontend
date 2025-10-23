@@ -128,6 +128,13 @@ export const ShopContextProvider = ({ children }) => {
     }
   };
 
+  const handleRemoveFromCart = (productId) => {
+    const updateCart = cart.filter(
+      (productInCart) => productInCart._id !== productId
+    );
+    setCart(updateCart);
+  }
+
   //POST a API
   //
   //
@@ -147,6 +154,7 @@ export const ShopContextProvider = ({ children }) => {
         addOrder,
         cartTotal,
         totalCartItems,
+        handleRemoveFromCart,
       }}
     >
       {children}
