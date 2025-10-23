@@ -32,12 +32,14 @@ const CheckoutContainer = () => {
                 <div className="flex items-center gap-4 pt-4">
                   <Link href={`/product/${product._id}`}>
                   <div className="relative w-24 h-24 rounded-lg overflow-hidden shadow-lg bg-[#ffefef]">
+                    {product.images?.[0] && (
                     <Image
                       src={`/assets/imgs/${product.images?.[0]}`}
-                      alt={product.name}
+                      alt={product.name || "Producto sin nombre"}
                       fill
                       className="object-cover"
                     />
+                    )}
                   </div>
                   </Link>
 
