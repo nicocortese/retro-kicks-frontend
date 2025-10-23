@@ -4,6 +4,7 @@ import { useShopContext } from "@/contexts/ShopContext";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Loading from "@/components/Loading";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const ProductDetail = ({ id }) => {
   const { getOneProduct, product, handleAddToCart, loading } = useShopContext();
@@ -21,7 +22,7 @@ const ProductDetail = ({ id }) => {
   const primaryImage = product.images?.[0] || null;
 
   const addToCart = (product) => {
-    if(!selectedSize) {
+    if (!selectedSize) {
       alert("Debes elegir un talle para agregar al carrito.");
       return;
     }
@@ -34,12 +35,20 @@ const ProductDetail = ({ id }) => {
     handleAddToCart(productToAdd);
   };
 
+  const handleSize = (size) => {
+    if (selectedSize === size) {
+      setSelectedSize(null);
+    } else {
+  setSelectedSize(size)
+};
+}
+
   return (
     <section className="max-w-[1400px] mx-auto px-6 py-20">
       <div className="flex flex-col lg:flex-row gap-16">
         {/* IZQUIERDA */}
         <div className="flex-1">
-          <div className="relative w-full h-[600px] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="relative w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src={`/assets/imgs/${mainImage || primaryImage}`}
               alt={product.name || "productos"}
@@ -140,8 +149,8 @@ const ProductDetail = ({ id }) => {
                   <button
                     key={size}
                     disabled={disabled}
-                    onClick={() => !disabled && setSelectedSize(size)}
-                    className={`px-5 py-2 rounded-lg border-2 font-semibold transition ${
+                    onClick={() => !disabled && handleSize(size)}
+                    className={`px-5 py-2 rounded-lg border-2 font-semibold cursor-pointer transition ${
                       selectedSize === size
                         ? "bg-[#D64541] text-white border-[#D64541]"
                         : "bg-white hover:bg-gray-50 border-gray-300 hover:border-[#D64541]"
@@ -155,11 +164,48 @@ const ProductDetail = ({ id }) => {
           </div>
           {/* BOTÓN */}
           <button
-            onClick={() => addToCart(product)}
+            onClick={addToCart}
             className="mt-10 w-full px-8 py-5 rounded-xl bg-[#D64541] text-white font-bold text-lg hover:bg-[#FF5B57] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
           >
             Agregar al carrito
           </button>
+
+          <div className="mt-10">
+            <h3 className="font-semibold text-2xl mb-3 text-[#272626]">
+              Valoración
+            </h3>
+            <div className="flex items-center gap-1">
+              {[1, 2, 3, 4, 5].map((starValue) => {
+                const roundedRating = Math.round(product.rating * 2) / 2;
+
+                if (starValue <= roundedRating) {
+                  return (
+                    <FaStar
+                      key={starValue}
+                      className="text-yellow-500 h-5 w-5"
+                    />
+                  );
+                } else if (starValue - 0.5 === roundedRating) {
+                  return (
+                    <FaStarHalfAlt
+                      key={starValue}
+                      className="text-yellow-500 h-5 w-5"
+                    />
+                  );
+                } else {
+                  return (
+                    <FaRegStar
+                      key={starValue}
+                      className="text-yellow-500 h-5 w-5"
+                    />
+                  );
+                }
+              })}
+              <span className="ml-2 text-sm text-[#272626]">
+                {product.rating?.toFixed(1)} de 5
+              </span>
+            </div>
+          </div>
 
           {/* GALERÍA */}
           <div className="flex gap-4 mt-10">
@@ -186,6 +232,6 @@ const ProductDetail = ({ id }) => {
       </div>
     </section>
   );
-};
+}
 
 export default ProductDetail;
