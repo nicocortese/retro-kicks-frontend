@@ -22,23 +22,26 @@ export const ShopContextProvider = ({ children }) => {
   // funciones productos
 
   const handleAddToCart = (product) => {
-    let productToAdd = {}; //se inicializa en vacío y despues se llena
+    const productUniqueId = product.uniqueId || product._id;
     const findProduct = cart.find(
-      (productInCart) => productInCart._id === product._id
+      (productInCart) => (productInCart.uniqueId || productInCart._id) === productUniqueId
     );
+
+    let productToAdd = {}; //se inicializa en vacío y despues se llena
 
     if (findProduct) {
       productToAdd = { ...findProduct, qty: findProduct.qty + product.qty }; //sobreescribe qty
-    } else {
-      productToAdd = product;
-    }
-    const filteredCart = cart.filter(
-      (productInCart) => productInCart._id !== product._id
-    );
-    setCart([...filteredCart, productToAdd]);
+    const updatedCart = cart.map((productInCart) => 
+    (productInCart.uniqueId || productInCart._id) === productUniqueId
+    ? productToAdd 
+    : productInCart
+  )
+    setCart(updatedCart);
     //obtengo lo que ya tenia y le agrego algo nuevo
-  };
-
+  } else {
+    setCart([...cart, product]);
+  }
+  }
   const getProducts = useCallback(async () => {
     try {
       setLoading(true);
@@ -128,9 +131,10 @@ export const ShopContextProvider = ({ children }) => {
     }
   };
 
-  const handleRemoveFromCart = (productId) => {
+  const handleRemoveFromCart = (productToRemove) => {
     const updateCart = cart.filter(
-      (productInCart) => productInCart._id !== productId
+      (productInCart) => (productInCart._uniqueId || productInCart._id)
+      !== (productToRemove.uniqueId || productToRemove._id)
     );
     setCart(updateCart);
   }
