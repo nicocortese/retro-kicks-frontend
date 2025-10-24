@@ -34,7 +34,7 @@ const CheckoutContainer = () => {
 
           <div className="flex flex-col">
             {cart.map((product, index) => (
-              <React.Fragment key={`product._id}-${product.selectedSize || index}`}>
+              <React.Fragment key={`${product._id}-${product.selectedSize}-${index}`}>
                 <div className="flex items-center gap-4 pt-4">
                   <Link href={`/product/${product._id}`}>
                   <div className="relative w-24 h-24 rounded-lg overflow-hidden shadow-lg bg-[#ffefef]">
