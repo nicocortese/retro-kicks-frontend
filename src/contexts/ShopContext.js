@@ -20,10 +20,9 @@ export const ShopContextProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
 
   const handleAddToCart = (product) => {
-    
     let productToAdd = {};
     const findProduct = cart.find(
-      (productInCart) => productInCart._id === product._id
+      (productInCart) => productInCart.uniqueId === product.uniqueId
     );
 
     if (findProduct) {
@@ -32,14 +31,14 @@ export const ShopContextProvider = ({ children }) => {
       productToAdd = product;
     }
     const filteredCart = cart.filter(
-      (productInCart) => productInCart._id !== product._id
+      (productInCart) => productInCart.uniqueId !== product.unqiueId
     );
     setCart([...filteredCart, productToAdd]);
   };
 
   const handleRemoveFromCart = (productToRemove) => {
     const updatedCart = cart.filter(
-      (productInCart) => productInCart._id !== productToRemove._id
+      (productInCart) => productInCart.uniqueId !== productToRemove.uniqueId
     );
     setCart(updatedCart);
   };
