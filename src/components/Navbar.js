@@ -11,35 +11,43 @@ import {
 } from "react-icons/fi";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useShopContext } from "@/contexts/ShopContext";
 
 const Navbar = () => {
-  // 1. Obtenemos los datos y funciones del contexto global
-  const { products, totalCartItems } = useShopContext();
+  const { totalCartItems, categories } = useShopContext();
   const itemsInCart = totalCartItems();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isSearchOpenDesktop, setIsSearchOpenDesktop] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([]);
   const [openMobileSubMenu, setOpenMobileSubMenu] = useState(null);
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const router = useRouter();
+
+  const handleSearch = (e) => {
+    if (e.key !== "Enter" || !searchQuery.trim()) return;
+
+    router.push(`/search?q=${searchQuery}`);
+
+    setSearchQuery("");
+    setIsSearchOpenDesktop(false);
+    setIsSearchOpen(false);
+  };
+
   const pathname = usePathname();
 
-  // 2. Usamos los 'products' del contexto para generar las categorías y marcas
-  useEffect(() => {
-    if (products && products.length > 0) {
-      const allStyles = products.map((p) => p.style).filter(Boolean);
-      const uniqueStyles = [...new Set(allStyles)];
-      setCategories(uniqueStyles);
+  const styleSlugs = ["urban", "running", "basketball", "outdoor", "skate"];
 
-      const allBrands = products.flatMap((p) => p.brand).filter(Boolean);
-      const uniqueBrands = [...new Set(allBrands)];
-      setBrands(uniqueBrands);
-    }
-  }, [products]); // Se ejecuta solo cuando los productos del contexto cargan o cambian
+  const styleCategories = categories.filter((cat) =>
+    styleSlugs.includes(cat.slug)
+  );
+
+  const brandCategories = categories.filter(
+    (cat) => !styleSlugs.includes(cat.slug)
+  );
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -75,10 +83,8 @@ const Navbar = () => {
 
   return (
     <>
-      {/* Navbar principal */}
       <div className="fixed top-0 bg-[#1a1a1a] w-full z-50 px-4 md:px-8 h-16">
         <div className="flex justify-between items-center h-full max-w-7xl mx-auto">
-          {/* Botón móvil + Logo */}
           <div className="flex items-center">
             <button
               onClick={toggleMenu}
@@ -92,7 +98,7 @@ const Navbar = () => {
             </button>
             <Link href="/" className="flex items-center">
               <Image
-                src="/assets/imgs/logo.png"
+                src="/assets/imgs/logoreal.png"
                 alt="Logo"
                 width={120}
                 height={40}
@@ -101,136 +107,143 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Navegación Desktop */}
-          <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
-            <ul className="flex items-center gap-8 text-[#FFEFEF] font-medium text-[16px] tracking-wider">
-              <li
-                className={`transition-colors duration-300 ${
-                  pathname === "/" ? "text-[#D64541]" : "hover:text-[#D64541]"
-                }`}
-              >
-                <Link href="/">HOME</Link>
-              </li>
-              <li
-                className={`relative group cursor-pointer ${
-                  pathname.startsWith("/shop") ||
-                  pathname.startsWith("/category/")
-                    ? "text-[#D64541]"
-                    : ""
-                }`}
-              >
-                <div className="flex items-center gap-1 hover:text-[#D64541] transition-colors duration-300">
-                  <span>SHOP</span>
-                  <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
-                </div>
-                <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
-                  {categories.length > 0 ? (
-                    categories.map((cat) => (
-                      <Link
-                        key={cat}
-                        href={`/shop/${cat.toLowerCase()}`}
-                        className="block px-4 py-2 text-sm text-[#FFEFEF] hover:bg-[#D64541] transition-colors capitalize"
-                      >
-                        {cat}
-                      </Link>
-                    ))
-                  ) : (
-                    <p className="px-4 py-2 text-sm text-gray-400">
-                      Cargando...
-                    </p>
-                  )}
-                </div>
-              </li>
-              <li
-                className={`relative group cursor-pointer ${
-                  pathname.startsWith("/brands/") ? "text-[#D64541]" : ""
-                }`}
-              >
-                <div className="flex items-center gap-1 hover:text-[#D64541] transition-colors duration-300">
-                  <span>BRANDS</span>
-                  <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
-                </div>
-                <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
-                  {brands.length > 0 ? (
-                    brands.map((brand) => (
-                      <Link
-                        key={brand}
-                        href={`/brands/${brand.toLowerCase()}`}
-                        className="block px-4 py-2 text-sm text-[#FFEFEF] hover:bg-[#D64541] transition-colors capitalize"
-                      >
-                        {brand}
-                      </Link>
-                    ))
-                  ) : (
-                    <p className="px-4 py-2 text-sm text-gray-400">
-                      Cargando...
-                    </p>
-                  )}
-                </div>
-              </li>
-              <li
-                className={`transition-colors duration-300 ${
-                  pathname === "/about"
-                    ? "text-[#D64541]"
-                    : "hover:text-[#D64541]"
-                }`}
-              >
-                <Link href="/about">ABOUT US</Link>
-              </li>
-              <li
-                className={`transition-colors duration-300 ${
-                  pathname === "/blog"
-                    ? "text-[#D64541]"
-                    : "hover:text-[#D64541]"
-                }`}
-              >
-                <Link href="/blog">BLOG</Link>
-              </li>
-            </ul>
-          </nav>
+          {!isSearchOpenDesktop ? (
+            <nav className="hidden md:flex absolute left-1/2 transform -translate-x-1/2">
+              <ul className="flex items-center gap-8 text-[#FFEFEF] font-medium text-[16px] tracking-wider">
+                <li
+                  className={`transition-colors duration-300 ${
+                    pathname === "/" ? "text-[#D64541]" : "hover:text-[#D64541]"
+                  }`}
+                >
+                  <Link href="/">HOME</Link>
+                </li>
 
-          {/* Acciones (search + wishlist + cart) */}
+                <li
+                  className={`relative group cursor-pointer ${
+                    pathname.startsWith("/shop") ||
+                    pathname.startsWith("/category/")
+                      ? "text-[#D64541]"
+                      : ""
+                  }`}
+                >
+                  <div className="flex items-center gap-1 hover:text-[#D64541] transition-colors duration-300">
+                    <span>SHOP</span>
+                    <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
+                  </div>
+                  <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
+                    {styleCategories.length > 0 ? (
+                      styleCategories.map((cat) => (
+                        <Link
+                          key={cat._id}
+                          href={`/shop/${cat.slug}`}
+                          className="block px-4 py-2 text-sm text-[#FFEFEF] hover:bg-[#D64541] transition-colors capitalize"
+                        >
+                          {cat.name}
+                        </Link>
+                      ))
+                    ) : (
+                      <p className="px-4 py-2 text-sm text-gray-400">
+                        Cargando...
+                      </p>
+                    )}
+                  </div>
+                </li>
+
+                <li
+                  className={`relative group cursor-pointer ${
+                    pathname.startsWith("/brands/") ? "text-[#D64541]" : ""
+                  }`}
+                >
+                  <div className="flex items-center gap-1 hover:text-[#D64541] transition-colors duration-300">
+                    <span>BRANDS</span>
+                    <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
+                  </div>
+                  <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
+                    {brandCategories.length > 0 ? (
+                      brandCategories.map((brand) => (
+                        <Link
+                          key={brand._id}
+                          href={`/brands/${brand.slug}`}
+                          className="block px-4 py-2 text-sm text-[#FFEFEF] hover:bg-[#D64541] transition-colors capitalize"
+                        >
+                          {brand.name}
+                        </Link>
+                      ))
+                    ) : (
+                      <p className="px-4 py-2 text-sm text-gray-400">
+                        Cargando...
+                      </p>
+                    )}
+                  </div>
+                </li>
+
+                <li
+                  className={`transition-colors duration-300 ${
+                    pathname === "/about"
+                      ? "text-[#D64541]"
+                      : "hover:text-[#D64541]"
+                  }`}
+                >
+                  <Link href="/about">ABOUT US</Link>
+                </li>
+                <li
+                  className={`transition-colors duration-300 ${
+                    pathname === "/blog"
+                      ? "text-[#D64541]"
+                      : "hover:text-[#D64541]"
+                  }`}
+                >
+                  <Link href="/blog">BLOG</Link>
+                </li>
+              </ul>
+            </nav>
+          ) : (
+            <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center gap-2">
+              <div className="flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-2 w-[280px]">
+                <FiSearch className="h-5 w-5" />
+                <input
+                  type="text"
+                  placeholder="BUSCAR Y PRESIONAR ENTER"
+                  autoFocus
+                  className="outline-none text-sm w-full pl-2 tracking-widest bg-transparent"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={handleSearch}
+                />
+              </div>
+              <button
+                onClick={() => setIsSearchOpenDesktop(false)}
+                className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
+              >
+                <FiX className="h-5 w-5" />
+              </button>
+            </div>
+          )}
+
           <div className="flex items-center gap-4">
-            {!isSearchOpenDesktop ? (
+            {!isSearchOpenDesktop && (
               <button
                 onClick={() => setIsSearchOpenDesktop(true)}
                 className="hidden md:block p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
               >
                 <FiSearch className="h-6 w-6" />
               </button>
-            ) : (
-              <div className="hidden md:flex items-center gap-2">
-                <div className="flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-2 w-[280px]">
-                  <FiSearch className="h-5 w-5 cursor-pointer" />
-                  <input
-                    type="text"
-                    placeholder="BUSCAR"
-                    autoFocus
-                    className="outline-none text-sm w-full pl-2 tracking-widest bg-transparent"
-                  />
-                </div>
-                <button
-                  onClick={() => setIsSearchOpenDesktop(false)}
-                  className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
-                >
-                  <FiX className="h-5 w-5" />
-                </button>
-              </div>
             )}
+
             <button
               onClick={toggleSearch}
               className="md:hidden p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors"
             >
               <FiSearch className="h-6 w-6" />
             </button>
+
             <Link
               href="/wishlist"
               className="p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
             >
               <FiHeart className="h-6 w-6" />
             </Link>
-            
-            {/* 3. Ícono del carrito con el contador dinámico */}
+
             <Link
               href="/checkout"
               className="relative p-2 text-[#FFEFEF] hover:text-[#D64541] transition-colors cursor-pointer"
@@ -246,7 +259,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Barra de búsqueda móvil */}
       <div
         className={`fixed top-16 right-0 w-80 bg-[#1a1a1a] z-40 transform transition-transform duration-300 ease-in-out md:hidden ${
           isSearchOpen ? "translate-x-0" : "translate-x-full"
@@ -263,18 +275,20 @@ const Navbar = () => {
             </button>
           </div>
           <div className="flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-3">
-            <FiSearch className="h-5 w-5 cursor-pointer" />
+            <FiSearch className="h-5 w-5" />
             <input
               type="text"
-              placeholder="¿Qué estás buscando?"
+              placeholder="Buscar y presionar Enter"
               className="outline-none text-sm w-full pl-2 bg-transparent"
               autoFocus
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onKeyDown={handleSearch}
             />
           </div>
         </div>
       </div>
 
-      {/* Menú móvil */}
       <div
         className={`fixed top-16 left-0 w-full bg-[#1a1a1a] z-40 transform transition-transform duration-300 ease-in-out md:hidden ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
@@ -308,14 +322,14 @@ const Navbar = () => {
               </div>
               {openMobileSubMenu === "shop" && (
                 <ul className="mt-2 pl-4 flex flex-col gap-2">
-                  {categories.map((cat) => (
-                    <li key={cat}>
+                  {styleCategories.map((cat) => (
+                    <li key={cat._id}>
                       <Link
-                        href={`/shop/${cat.toLowerCase()}`}
+                        href={`/shop/${cat.slug}`}
                         onClick={() => setIsMenuOpen(false)}
                         className="text-sm capitalize hover:text-[#D64541]"
                       >
-                        {cat}
+                        {cat.name}
                       </Link>
                     </li>
                   ))}
@@ -340,14 +354,14 @@ const Navbar = () => {
               </div>
               {openMobileSubMenu === "brands" && (
                 <ul className="mt-2 pl-4 flex flex-col gap-2">
-                  {brands.map((brand) => (
-                    <li key={brand}>
+                  {brandCategories.map((brand) => (
+                    <li key={brand._id}>
                       <Link
-                        href={`/brands/${brand.toLowerCase()}`}
+                        href={`/brands/${brand.slug}`}
                         onClick={() => setIsMenuOpen(false)}
                         className="text-sm capitalize hover:text-[#D64541]"
                       >
-                        {brand}
+                        {brand.name}
                       </Link>
                     </li>
                   ))}
@@ -368,7 +382,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Overlay */}
       {(isMenuOpen || isSearchOpen) && (
         <div
           className="fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"

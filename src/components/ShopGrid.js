@@ -12,7 +12,6 @@ const ShopGrid = () => {
 
   return (
     <section className="max-w-[1200px] mx-auto px-4 py-10">
-      {/* Título + Ver más alineados */}
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold text-[rgb(var(--foreground-rgb))]">
           ¡Descubre las ofertas de hoy!
@@ -27,7 +26,6 @@ const ShopGrid = () => {
         </Link>
       </div>
 
-      {/* Grid de productos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
       {loading ? (
         <p>Cargando productos...</p>

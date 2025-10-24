@@ -1,65 +1,39 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import ShopCards from "@/components/ShopCards";
 import Loading from "@/components/Loading";
+import { useShopContext } from "@/contexts/ShopContext";
 
-const ProductGridPage = ({
-  filterType,
-  filterValue,
-  titlePrefix,
-  descriptionText,
-}) => {
+const ProductGridPage = ({ filterValue, titlePrefix, descriptionText }) => {
+  const { products, categories, loading } = useShopContext();
   const [filteredProducts, setFilteredProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!filterValue) return; // ✅ Evita fetch innecesario si no hay filtro
+    if (!filterValue || products.length === 0 || categories.length === 0)
+      return;
 
-    const fetchAndFilterProducts = async () => {
-      setLoading(true);
-      try {
-        // 🔹 1. Obtenemos todos los productos
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/products`);
-        const allProducts = res.data.products || [];
+    const currentCategory = categories.find((cat) => cat.slug === filterValue);
+    if (!currentCategory) {
+      setFilteredProducts([]);
+      return;
+    }
+    const categoryId = currentCategory._id;
 
-        // 🔹 2. Filtramos en el frontend
-        let productsToShow = [];
+    const productsToShow = products.filter((product) =>
+      product.categories.includes(categoryId)
+    );
 
-        if (filterType === "category") {
-          productsToShow = allProducts.filter(
-            (p) => p.style?.toLowerCase() === filterValue.toLowerCase()
-          );
-        } else if (filterType === "brand") {
-          productsToShow = allProducts.filter(
-            (p) => p.brand?.toLowerCase() === filterValue.toLowerCase()
-          );
-        }
-
-        setFilteredProducts(productsToShow);
-      } catch (error) {
-        console.error(
-          `Error al buscar y filtrar productos por ${filterType}:`,
-          error
-        );
-        setFilteredProducts([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAndFilterProducts();
-  }, [filterType, filterValue]); // ✅ ordenado por convención
+    setFilteredProducts(productsToShow);
+  }, [filterValue, products, categories]);
 
   if (loading) return <Loading />;
 
   return (
     <section className="max-w-7xl mx-auto px-6 py-12">
-      {/* 🔹 Título y descripción */}
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold mb-3 capitalize">
+        <h1 className="text-3xl font-bold mb-3 capitalize pt-10">
           {titlePrefix} {filterValue}
         </h1>
         {descriptionText && (
@@ -67,13 +41,10 @@ const ProductGridPage = ({
         )}
       </div>
 
-      {/* 🔹 Grilla de productos */}
       {filteredProducts.length > 0 ? (
-        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md-grid-cols-3 lg:grid-cols-4">
           {filteredProducts.map((product) => (
-            <Link key={product._id} href={`/product/${product._id}`}>
-              <ShopCards product={product} />
-            </Link>
+            <ShopCards key={product._id} product={product} />
           ))}
         </div>
       ) : (
