@@ -9,11 +9,10 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto px-8 grid grid-cols-1 md:grid-cols-3 gap-12">
         <div className="flex flex-col gap-4">
           <Image
-            src="/assets/imgs/logo.png"
+            src="/assets/imgs/logoreal.png"
             alt="Logo"
-            width={120}
-            height={40}
-            className="h-10 w-auto"
+            width={250}
+            height={250}
           />
           <p className="text-sm text-[#FFEFEF]/70 leading-relaxed">
             Tu tienda de zapatillas retro favoritas. Estilo que trasciende

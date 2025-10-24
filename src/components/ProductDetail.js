@@ -21,7 +21,8 @@ const ProductDetail = ({ id }) => {
 
   const primaryImage = product.images?.[0] || null;
 
-  const addToCart = (product) => {
+  const addToCart = () => {
+    console.log("product", product)
     if (!selectedSize) {
       alert("Debes elegir un talle para agregar al carrito.");
       return;
@@ -48,7 +49,7 @@ const ProductDetail = ({ id }) => {
       <div className="flex flex-col lg:flex-row gap-16">
         {/* IZQUIERDA */}
         <div className="flex-1">
-          <div className="relative w-full h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="relative w-full h-[400px] rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src={`/assets/imgs/${mainImage || primaryImage}`}
               alt={product.name || "productos"}
@@ -164,12 +165,36 @@ const ProductDetail = ({ id }) => {
           </div>
           {/* BOTÓN */}
           <button
-            onClick={addToCart}
+            onClick={() => addToCart()}
             className="mt-10 w-full px-8 py-5 rounded-xl bg-[#D64541] text-white font-bold text-lg hover:bg-[#FF5B57] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
           >
             Agregar al carrito
           </button>
 
+          
+
+          {/* GALERÍA */}
+          <div className="flex gap-4 mt-10">
+            {product.images?.map((img, idx) => (
+              <div
+                key={idx}
+                onMouseEnter={() => setMainImage(img)}
+                className={`relative w-28 h-28 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 shadow-md hover:shadow-lg ${
+                  (mainImage || product.images[0]) === img
+                    ? "border-red-500 scale-105"
+                    : "border-gray-300 hover:border-red-400"
+                }`}
+              >
+                <Image
+                  src={`/assets/imgs/${img}`}
+                  alt={`${product.name}-${idx}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ))}
+            
+          </div>
           <div className="mt-10">
             <h3 className="font-semibold text-2xl mb-3 text-[#272626]">
               Valoración
@@ -205,28 +230,6 @@ const ProductDetail = ({ id }) => {
                 {product.rating?.toFixed(1)} de 5
               </span>
             </div>
-          </div>
-
-          {/* GALERÍA */}
-          <div className="flex gap-4 mt-10">
-            {product.images?.map((img, idx) => (
-              <div
-                key={idx}
-                onMouseEnter={() => setMainImage(img)}
-                className={`relative w-28 h-28 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 shadow-md hover:shadow-lg ${
-                  (mainImage || product.images[0]) === img
-                    ? "border-red-500 scale-105"
-                    : "border-gray-300 hover:border-red-400"
-                }`}
-              >
-                <Image
-                  src={`/assets/imgs/${img}`}
-                  alt={`${product.name}-${idx}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
           </div>
         </div>
       </div>

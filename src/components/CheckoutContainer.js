@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, {useEffect} from "react";
 import { useShopContext } from "@/contexts/ShopContext";
 import { CheckoutForm } from "./FormCheckout";
 import Image from "next/image";
@@ -13,6 +13,12 @@ const CheckoutContainer = () => {
   const handleAddOrder = (values) => {
     addOrder(values);
   };
+
+
+  useEffect(()=> {
+    console.log("cart", cart)
+    console.log("cartTotal", cartTotal())
+  },[])
 
   return (
     <section className="max-w-[1400px] mx-auto px-6 py-20">

@@ -20,6 +20,7 @@ export const ShopContextProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
 
   const handleAddToCart = (product) => {
+    
     let productToAdd = {};
     const findProduct = cart.find(
       (productInCart) => productInCart._id === product._id

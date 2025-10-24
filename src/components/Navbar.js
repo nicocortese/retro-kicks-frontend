@@ -98,7 +98,7 @@ const Navbar = () => {
             </button>
             <Link href="/" className="flex items-center">
               <Image
-                src="/assets/imgs/logo.png"
+                src="/assets/imgs/logoreal.png"
                 alt="Logo"
                 width={120}
                 height={40}

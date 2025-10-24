@@ -30,7 +30,7 @@ function validateSurname(value) {
 
 export const CheckoutForm = ({ handleAddOrder }) => (
   <div className="flex items-center justify-center">
-    <div className="bg-[#1a1a1a] p-10 rounded-2xl shadow-2xl w-full max-w-md mx-auto">
+    <div className="bg-[#1a1a1a] p-8 rounded-2xl shadow-2xl w-full max-w-md mx-auto">
       <h2 className="text-3xl font-bold mb-6 text-[#d64541] tracking-wide uppercase text-center">
         Datos del comprador
       </h2>
