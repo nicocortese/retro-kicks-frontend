@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik, Form, Field } from "formik";
 
-// ✅ Validaciones simplificadas
 function validateEmail(value) {
   let error;
   if (!value) {
@@ -37,7 +36,7 @@ export const CheckoutForm = ({ handleAddOrder }) => (
 
       <Formik
         initialValues={{
-          name: "", // 👈 Siempre definidos
+          name: "",
           surname: "",
           email: "",
         }}

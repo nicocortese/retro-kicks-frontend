@@ -25,11 +25,8 @@ const Footer = () => {
           <Link href="/" className="hover:text-[#D64541] transition-colors">
             Home
           </Link>
-          <Link href="/" className="hover:text-[#D64541] transition-colors">
+          <Link href="/shop" className="hover:text-[#D64541] transition-colors">
             Shop
-          </Link>
-          <Link href="/" className="hover:text-[#D64541] transition-colors">
-            Brands
           </Link>
           <Link
             href="/about"
