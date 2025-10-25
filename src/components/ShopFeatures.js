@@ -30,7 +30,7 @@ const ShopFeatures = () => {
         <div key={index} className="flex flex-col items-center">
           <div className="mb-4 text-[#D64541]">{feature.icon}</div>
           <h3 className="font-semibold text-lg">{feature.title}</h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+          <p className="text-sm text-[#272626]/60">
             {feature.description}
           </p>
         </div>

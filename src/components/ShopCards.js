@@ -42,7 +42,7 @@ const ShopCards = ({ product }) => {
               className="object-contain p-4 rounded-xl transition-all duration-300 group-hover:scale-105"
             />
           ) : (
-            <div className="flex items-center justify-center h-full text-center p-4 bg-gray-100 text-gray-500 font-semibold">
+            <div className="flex items-center justify-center h-full text-center p-4 bg-[#ffefef] text-[#272626]/70 font-semibold">
               No hay imagen disponible.
             </div>
           )}
@@ -51,8 +51,8 @@ const ShopCards = ({ product }) => {
             onClick={handleWishlistClick}
             className={`absolute top-3 right-3 p-3 rounded-full transition-colors ${
               inWishlist
-                ? "bg-[#D64541] text-white"
-                : "bg-black/40 text-white hover:bg-black/60"
+                ? "bg-[#D64541] text-[#ffefef]"
+                : "bg-[#272626]/70 text-[#ffefef]"
             }`}
             aria-label={
               inWishlist
@@ -61,14 +61,14 @@ const ShopCards = ({ product }) => {
             }
           >
             <FiHeart
-              className="w-5 h-5"
+              className="w-5 h-5 cursor-pointer"
               style={{ fill: inWishlist ? "currentColor" : "none" }}
             />
           </button>
         </div>
 
         <div className="p-4 flex flex-col flex-1">
-          <h3 className="font-semibold text-lg">{name}</h3>
+          <h1 className="font-semibold text-lg text-[#272626]">{name}</h1>
           <h4 className="font-bold text-lg">
             ${product.price?.toLocaleString("es-AR")}
           </h4>
