@@ -71,7 +71,7 @@ const CheckoutContainer = () => {
                   <button
                     onClick={() => handleRemoveFromCart(product)}
                     title="Eliminar producto"
-                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#D64541] text-white hover:bg-red-700 transition-colors duration-200 shadow-md cursor-pointer"
+                    className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg bg-[#D64541] text-[#ffefef] hover:bg-red-700 transition-colors duration-200 shadow-md cursor-pointer"
                   >
                     <FiMinusCircle className="h-5 w-5" />
                   </button>

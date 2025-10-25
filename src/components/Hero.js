@@ -15,7 +15,7 @@ const Hero = () => {
 
       <div className="absolute top-0 left-0 w-full h-full bg-black/50 z-10"></div>
 
-      <h1 className="relative z-20 text-white text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center px-4 text-balance">
+      <h1 className="relative z-20 text-[#ffefef] text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-center px-4 text-balance">
         El estilo que dejó huella
       </h1>
     </section>

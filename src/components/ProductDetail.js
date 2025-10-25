@@ -22,7 +22,7 @@ const ProductDetail = ({ id }) => {
   const primaryImage = product.images?.[0] || null;
 
   const addToCart = () => {
-    console.log("product", product)
+    console.log("product", product);
     if (!selectedSize) {
       alert("Debes elegir un talle para agregar al carrito.");
       return;
@@ -31,7 +31,7 @@ const ProductDetail = ({ id }) => {
       ...product,
       qty: 1,
       selectedSize,
-      uniqueId: `${product._id}-${selectedSize}`,
+      uniqueId: `${product._id}-${sele0ctedSize}`,
     };
     handleAddToCart(productToAdd);
   };
@@ -40,16 +40,40 @@ const ProductDetail = ({ id }) => {
     if (selectedSize === size) {
       setSelectedSize(null);
     } else {
-  setSelectedSize(size)
-};
-}
+      setSelectedSize(size);
+    }
+  };
+
+   {/* GALERÍA */}
+          const galeriaResponsive = (className) => (
+          <div className={`flex flex-wrap gap-4 mt-6 ${className}`}>
+            {product.images?.map((img, idx) => (
+              <div
+                key={idx}
+                onMouseEnter={() => setMainImage(img)}
+                className={`relative w-28 h-28 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 shadow-md hover:shadow-lg ${
+                  (mainImage || product.images[0]) === img
+                    ? "border-[#D64541] scale-105"
+                    : "border-[#272626]/30 hover:border-[#D64541]"
+                }`}
+              >
+                <Image
+                  src={`/assets/imgs/${img}`}
+                  alt={`${product.name}-${idx}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
+            ))}
+          </div>
+          );
 
   return (
-    <section className="max-w-[1400px] mx-auto px-6 py-20">
-      <div className="flex flex-col lg:flex-row gap-16">
+    <section className="max-w-[1400px] mx-auto px-4 sm:px-6 py-10 md:py-20">
+      <div className="flex flex-col lg:flex-row gap-8 lg:gap-16">
         {/* IZQUIERDA */}
         <div className="flex-1">
-          <div className="relative w-full h-[400px] rounded-2xl overflow-hidden shadow-2xl">
+          <div className="relative w-full h-[350px] sm:h-[400px] rounded-2xl overflow-hidden shadow-2xl">
             <Image
               src={`/assets/imgs/${mainImage || primaryImage}`}
               alt={product.name || "productos"}
@@ -57,13 +81,14 @@ const ProductDetail = ({ id }) => {
               className="object-contain p-8"
             />
           </div>
+          {galeriaResponsive("flex lg:hidden")}
 
           {/* DESCRIPCIÓN */}
           <div className="mt-10">
             <h3 className="font-bold text-lg mb-3 text-[#272626]">
               Descripción
             </h3>
-            <p className="text-base leading-relaxed text-[#272626]">
+            <p className="text-base leading-relaxed text-justify text-[#272626]">
               {product.description}
             </p>
           </div>
@@ -72,7 +97,7 @@ const ProductDetail = ({ id }) => {
           <div className="mt-8 space-y-4 ">
             <div className="flex items-start gap-3 text-[16px] text-[#272626]/80">
               <svg
-                className="w-5 h-5 text-green-600 mt-0.5"
+                className="w-5 h-5 text-green-600"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -86,7 +111,7 @@ const ProductDetail = ({ id }) => {
             </div>
             <div className="flex items-start gap-3 text-[16px] text-[#272626]/80">
               <svg
-                className="w-5 h-5 text-green-600 mt-0.5"
+                className="w-5 h-5 text-green-600"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -100,7 +125,7 @@ const ProductDetail = ({ id }) => {
             </div>
             <div className="flex items-start gap-3 text-[16px] text-[#272626]/80">
               <svg
-                className="w-5 h-5 text-green-600 mt-0.5"
+                className="w-5 h-5 text-green-600"
                 fill="currentColor"
                 viewBox="0 0 20 20"
               >
@@ -117,10 +142,7 @@ const ProductDetail = ({ id }) => {
 
         {/* DERECHA */}
         <div className="flex-1 lg:pl-8">
-          <p className="text-sm uppercase tracking-widest font-bold text-[#D64541] mb-2">
-            {product.brand}
-          </p>
-          <h1 className="text-4xl font-bold text-[#272626] mb-2">
+          <h1 className="text-3xl lg:text-4xl font-bold text-[#272626] mb-2">
             {product.name}
           </h1>
           <p className="text-base text-[#272626]/80 flex gap-2">
@@ -132,7 +154,7 @@ const ProductDetail = ({ id }) => {
           <div className="mt-8 pb-6 border-b border-[#272626]/30">
             <div className="flex flex-col">
               <p className="text-xl text-[#272626]/70">Precio</p>
-              <span className="text-4xl font-bold text-[#272626]">
+              <span className="text-3xl lg:text-4xl font-bold text-[#272626]">
                 ${product.price?.toLocaleString("es-AR")}
               </span>
             </div>
@@ -170,33 +192,11 @@ const ProductDetail = ({ id }) => {
           >
             Agregar al carrito
           </button>
-
+          {galeriaResponsive("hidden lg:flex")}
           
-
-          {/* GALERÍA */}
-          <div className="flex gap-4 mt-10">
-            {product.images?.map((img, idx) => (
-              <div
-                key={idx}
-                onMouseEnter={() => setMainImage(img)}
-                className={`relative w-28 h-28 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 shadow-md hover:shadow-lg ${
-                  (mainImage || product.images[0]) === img
-                    ? "border-[#D64541] scale-105"
-                    : "border-[#272626]/30 hover:border-[#D64541]"
-                }`}
-              >
-                <Image
-                  src={`/assets/imgs/${img}`}
-                  alt={`${product.name}-${idx}`}
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
-            
-          </div>
+          {/* VALORACIÓN */}
           <div className="mt-10">
-            <h3 className="font-semibold text-2xl mb-3 text-[#272626]">
+            <h3 className="font-semibold text-xl lg:text-2xl mb-3 text-[#272626]">
               Valoración
             </h3>
             <div className="flex items-center gap-1">
@@ -235,6 +235,6 @@ const ProductDetail = ({ id }) => {
       </div>
     </section>
   );
-}
+};
 
 export default ProductDetail;

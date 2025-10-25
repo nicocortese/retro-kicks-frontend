@@ -50,12 +50,12 @@ const Footer = () => {
             <input
               type="email"
               placeholder="Tu email"
-              className="flex-1 px-4 py-3 rounded-full text-black outline-none bg-white"
+              className="flex-1 px-4 py-3 rounded-full text-black outline-none bg-[#ffefef]"
             />
 
             <button
               type="submit"
-              className="bg-[#D64541] text-white px-5 py-3 rounded-r-full hover:bg-[#FF5B57] transition-colors"
+              className="bg-[#D64541] text-[#ffefef] px-5 py-3 rounded-r-full hover:bg-[#FF5B57] transition-colors"
             >
               Enviar
             </button>

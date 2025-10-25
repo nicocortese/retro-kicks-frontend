@@ -37,7 +37,7 @@ const ProductGridPage = ({ filterValue, titlePrefix, descriptionText }) => {
           {titlePrefix} {filterValue}
         </h1>
         {descriptionText && (
-          <p className="text-gray-600 max-w-2xl mx-auto">{descriptionText}</p>
+          <p className="text-red max-w-2xl mx-auto">{descriptionText}</p>
         )}
       </div>
 
@@ -49,12 +49,12 @@ const ProductGridPage = ({ filterValue, titlePrefix, descriptionText }) => {
         </div>
       ) : (
         <div className="text-center py-16">
-          <p className="text-lg text-gray-500">
+          <p className="text-lg text-[#272626]/80">
             No hay productos disponibles para esta búsqueda.
           </p>
           <Link
             href="/shop"
-            className="inline-block mt-6 px-6 py-3 bg-[#D64541] text-white rounded hover:bg-[#FF5B57] transition"
+            className="inline-block mt-6 px-6 py-3 bg-[#D64541] text-[#ffefef] rounded hover:bg-[#FF5B57] transition"
           >
             Ver todos los productos
           </Link>

@@ -149,10 +149,10 @@ const Navbar = () => {
                   }`}
                 >
                   <div className="flex items-center gap-1 hover:text-[#D64541] transition-colors duration-300">
-                    <span>SHOP</span>
+                    SHOP
                     <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
                   </div>
-                  <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
+                  <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
                     {styleCategories.length > 0 ? (
                       styleCategories.map((cat) => (
                         <Link
@@ -164,7 +164,7 @@ const Navbar = () => {
                         </Link>
                       ))
                     ) : (
-                      <p className="px-4 py-2 text-sm text-gray-400">
+                      <p className="px-4 py-2 text-sm text-[#272626]/60">
                         Cargando...
                       </p>
                     )}
@@ -177,10 +177,10 @@ const Navbar = () => {
                   }`}
                 >
                   <div className="flex items-center gap-1 hover:text-[#D64541] transition-colors duration-300">
-                    <span>BRANDS</span>
+                    BRANDS
                     <FiChevronDown className="h-4 w-4 transition-transform duration-300 group-hover:rotate-180" />
                   </div>
-                  <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] border border-gray-700 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
+                  <div className="absolute left-1/2 -translate-x-1/2 mt-2 bg-[#1a1a1a] rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 min-w-[160px] pointer-events-none group-hover:pointer-events-auto">
                     {brandCategories.length > 0 ? (
                       brandCategories.map((brand) => (
                         <Link
@@ -192,7 +192,7 @@ const Navbar = () => {
                         </Link>
                       ))
                     ) : (
-                      <p className="px-4 py-2 text-sm text-gray-400">
+                      <p className="px-4 py-2 text-sm text-[#272626]/60">
                         Cargando...
                       </p>
                     )}
@@ -272,7 +272,7 @@ const Navbar = () => {
             >
               <FiShoppingCart className="h-6 w-6" />
               {itemsInCart > 0 && (
-                <span className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#D64541] rounded-full">
+                <span className="absolute top-0 right-0 flex items-center justify-center w-5 h-5 text-xs font-bold text-[#ffefef] bg-[#D64541] rounded-full">
                   {itemsInCart}
                 </span>
               )}
@@ -408,7 +408,7 @@ const Navbar = () => {
             </li>
           </ul>
 
-          <div className="mt-auto pt-6 border-t border-gray-700">
+          <div className="mt-auto pt-6 border-t">
             <div className="flex items-center gap-4">
               <Link
                 href="/wishlist"
@@ -426,7 +426,7 @@ const Navbar = () => {
                 <FiShoppingCart className="w-5 h-5" />
                 <span>Carrito</span>
                 {itemsInCart > 0 && (
-                  <span className="absolute top-0 right-[-10px] flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-[#D64541] rounded-full">
+                  <span className="absolute top-0 right-[-10px] flex items-center justify-center w-5 h-5 text-xs font-bold text-[#ffefef] bg-[#D64541] rounded-full">
                     {itemsInCart}
                   </span>
                 )}

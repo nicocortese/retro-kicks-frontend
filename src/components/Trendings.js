@@ -20,13 +20,13 @@ const trendingTopics = [
 
 export default function Trendings() {
   return (
-    <section className="bg-gray-50 py-16 px-6">
+    <section className= "py-16 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#272626] mb-4">
             Descubrí las Tendencias
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg font-semibold text-[#272626]/80">
             Explorá las historias y estilos que están marcando el ritmo en el
             mundo sneaker.
           </p>
@@ -48,11 +48,11 @@ export default function Trendings() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
 
-                <div className="absolute bottom-0 left-0 p-6 md:p-8 text-white">
+                <div className="absolute bottom-0 left-0 p-6 md:p-8 text-[#ffefef]">
                   <h3 className="text-2xl lg:text-3xl font-bold mb-2">
                     {topic.title}
                   </h3>
-                  <p className="text-base lg:text-lg text-gray-200">
+                  <p className="text-base lg:text-lg text-[#ffefef]">
                     {topic.description}
                   </p>
                 </div>
