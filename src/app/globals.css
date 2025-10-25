@@ -22,6 +22,11 @@ body {
 
 .logoFont {
   font-family: "Bebas Neue", sans-serif;
+  
+}
+
+h1, span {
+  font-family: "Bebas Neue", sans-serif;
 }
 
 .text-balance {

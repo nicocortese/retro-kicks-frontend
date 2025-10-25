@@ -31,7 +31,7 @@ const BrandLogos = () => {
           <Link
             key={brand.slug}
             href={`/brands/${brand.slug}`}
-            className="flex items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
+            className="flex items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105 w-[160px] h-[100px]"
           >
             <div className="relative w-full h-24 sm:h-28 flex items-center justify-center">
               <Image

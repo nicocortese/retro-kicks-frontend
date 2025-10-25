@@ -60,17 +60,17 @@ const ProductDetail = ({ id }) => {
 
           {/* DESCRIPCIÓN */}
           <div className="mt-10">
-            <h3 className="font-bold text-lg mb-3 text-gray-900">
+            <h3 className="font-bold text-lg mb-3 text-[#272626]">
               Descripción
             </h3>
-            <p className="text-base leading-relaxed text-gray-700">
+            <p className="text-base leading-relaxed text-[#272626]">
               {product.description}
             </p>
           </div>
 
           {/* INFO */}
-          <div className="mt-8 space-y-4">
-            <div className="flex items-start gap-3 text-sm text-gray-700">
+          <div className="mt-8 space-y-4 ">
+            <div className="flex items-start gap-3 text-[16px] text-[#272626]/80">
               <svg
                 className="w-5 h-5 text-green-600 mt-0.5"
                 fill="currentColor"
@@ -82,9 +82,9 @@ const ProductDetail = ({ id }) => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Envío gratis en compras mayores a $200.000</span>
+              <p>Envío gratis en compras mayores a $200.000</p>
             </div>
-            <div className="flex items-start gap-3 text-sm text-gray-700">
+            <div className="flex items-start gap-3 text-[16px] text-[#272626]/80">
               <svg
                 className="w-5 h-5 text-green-600 mt-0.5"
                 fill="currentColor"
@@ -96,9 +96,9 @@ const ProductDetail = ({ id }) => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Devoluciones gratis dentro de los 30 días</span>
+              <p>Devoluciones gratis dentro de los 30 días</p>
             </div>
-            <div className="flex items-start gap-3 text-sm text-gray-700">
+            <div className="flex items-start gap-3 text-[16px] text-[#272626]/80">
               <svg
                 className="w-5 h-5 text-green-600 mt-0.5"
                 fill="currentColor"
@@ -110,7 +110,7 @@ const ProductDetail = ({ id }) => {
                   clipRule="evenodd"
                 />
               </svg>
-              <span>Garantía de autenticidad del 100%</span>
+              <p>Garantía de autenticidad del 100%</p>
             </div>
           </div>
         </div>
@@ -120,26 +120,26 @@ const ProductDetail = ({ id }) => {
           <p className="text-sm uppercase tracking-widest font-bold text-[#D64541] mb-2">
             {product.brand}
           </p>
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+          <h1 className="text-4xl font-bold text-[#272626] mb-2">
             {product.name}
           </h1>
-          <p className="text-base text-gray-600 flex gap-2">
-            <span className="font-medium">{product.gender}</span>
-            <span>•</span>
-            <span className="font-medium">{product.style}</span>
+          <p className="text-base text-[#272626]/80 flex gap-2">
+            {product.gender}
+            <span>• • • •</span>
+            {product.style}
           </p>
           {/* PRECIO */}
-          <div className="mt-8 pb-6 border-b border-gray-200">
+          <div className="mt-8 pb-6 border-b border-[#272626]/30">
             <div className="flex flex-col">
-              <span className="text-sm text-gray-500">Precio</span>
-              <span className="text-4xl font-bold text-gray-900">
+              <p className="text-xl text-[#272626]/70">Precio</p>
+              <span className="text-4xl font-bold text-[#272626]">
                 ${product.price?.toLocaleString("es-AR")}
               </span>
             </div>
           </div>
           {/* TALLES */}
           <div className="mt-6">
-            <h3 className="font-semibold mb-3 text-gray-900">
+            <h3 className="font-semibold mb-3 text-[#272626]">
               Seleccioná tu talle
             </h3>
             <div className="flex flex-wrap gap-3">
@@ -153,8 +153,8 @@ const ProductDetail = ({ id }) => {
                     onClick={() => !disabled && handleSize(size)}
                     className={`px-5 py-2 rounded-lg border-2 font-semibold cursor-pointer transition ${
                       selectedSize === size
-                        ? "bg-[#D64541] text-white border-[#D64541]"
-                        : "bg-white hover:bg-gray-50 border-gray-300 hover:border-[#D64541]"
+                        ? "bg-[#D64541] text-[#ffefef] border-[#D64541]"
+                        : "bg-white hover:bg-[#ffefef]0 border-[#272626]/50 hover:border-[#D64541]"
                     } ${disabled ? "opacity-40 cursor-not-allowed" : ""}`}
                   >
                     {size}
@@ -166,7 +166,7 @@ const ProductDetail = ({ id }) => {
           {/* BOTÓN */}
           <button
             onClick={() => addToCart()}
-            className="mt-10 w-full px-8 py-5 rounded-xl bg-[#D64541] text-white font-bold text-lg hover:bg-[#FF5B57] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
+            className="mt-10 w-full px-8 py-5 rounded-xl bg-[#D64541] text-[#ffefef] font-bold text-lg hover:bg-[#FF5B57] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 cursor-pointer"
           >
             Agregar al carrito
           </button>
@@ -181,8 +181,8 @@ const ProductDetail = ({ id }) => {
                 onMouseEnter={() => setMainImage(img)}
                 className={`relative w-28 h-28 rounded-xl overflow-hidden cursor-pointer border-2 transition-all duration-200 shadow-md hover:shadow-lg ${
                   (mainImage || product.images[0]) === img
-                    ? "border-red-500 scale-105"
-                    : "border-gray-300 hover:border-red-400"
+                    ? "border-[#D64541] scale-105"
+                    : "border-[#272626]/30 hover:border-[#D64541]"
                 }`}
               >
                 <Image
@@ -226,9 +226,9 @@ const ProductDetail = ({ id }) => {
                   );
                 }
               })}
-              <span className="ml-2 text-sm text-[#272626]">
+              <p className="ml-2 text-sm text-[#272626]">
                 {product.rating?.toFixed(1)} de 5
-              </span>
+              </p>
             </div>
           </div>
         </div>
