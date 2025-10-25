@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import ShopCards from "@/components/ShopCards";
 import Loading from "@/components/Loading";
 import { useShopContext } from "@/contexts/ShopContext";

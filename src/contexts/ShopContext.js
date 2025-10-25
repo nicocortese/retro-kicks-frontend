@@ -13,11 +13,51 @@ const ShopContext = createContext();
 
 export const ShopContextProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
   const [products, setProducts] = useState([]);
   const [product, setProduct] = useState({});
   const [categoryProducts, setCategoryProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) setCart(JSON.parse(storedCart));
+    const storedWishlist = localStorage.getItem("wishlist");
+    if (storedWishlist) setWishlist(JSON.parse(storedWishlist));
+  }, []);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
+
+  const handleToggleWishlist = (product) => {
+    const isInWishlist = wishlist.find((item) => item._id === product._id);
+    if (isInWishlist) {
+      setWishlist(wishlist.filter((item) => item._id !== product._id));
+    } else {
+      setWishlist([...wishlist, product]);
+    }
+  };
+
+  const handleRemoveFromWishlist = (productId) => {
+    setWishlist(wishlist.filter((item) => item._id !== productId));
+  };
+
+  const handleClearWishlist = () => {
+    setWishlist([]);
+  };
+
+  const isProductInWishlist = (productId) => {
+    return wishlist.some((item) => item._id === productId);
+  };
 
   const handleAddToCart = (product) => {
     let productToAdd = {};
@@ -31,7 +71,7 @@ export const ShopContextProvider = ({ children }) => {
       productToAdd = product;
     }
     const filteredCart = cart.filter(
-      (productInCart) => productInCart.uniqueId !== product.unqiueId
+      (productInCart) => productInCart.uniqueId !== product.uniqueId
     );
     setCart([...filteredCart, productToAdd]);
   };
@@ -117,7 +157,6 @@ export const ShopContextProvider = ({ children }) => {
         _id: product._id,
         qty: product.qty,
       };
-
       return prod;
     });
 
@@ -128,15 +167,13 @@ export const ShopContextProvider = ({ children }) => {
     };
 
     try {
-      const response = await axios.post(
+      await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/orders`,
         orderValues
       );
-
       return true;
     } catch (error) {
       console.log("error", error);
-
       return false;
     }
   };
@@ -159,6 +196,11 @@ export const ShopContextProvider = ({ children }) => {
         cartTotal,
         totalCartItems,
         handleRemoveFromCart,
+        wishlist,
+        handleToggleWishlist,
+        handleRemoveFromWishlist,
+        handleClearWishlist,
+        isProductInWishlist,
       }}
     >
       {children}

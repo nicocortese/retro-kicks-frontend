@@ -5,30 +5,33 @@ export default function Blog() {
     {
       id: 1,
       title: "AND1: La Revolución del Streetball",
-      excerpt: "Cómo una marca nacida en las canchas de Filadelfia cambió para siempre el mundo del basketball urbano.",
+      excerpt:
+        "Cómo una marca nacida en las canchas de Filadelfia cambió para siempre el mundo del basketball urbano.",
       image: "/assets/imgs/and1-basketball.jpg",
       date: "15 Enero 2025",
       readTime: "5 min",
-      category: "Historia"
+      category: "Historia",
     },
     {
       id: 2,
       title: "Converse All Star: 100 Años de Rebeldía",
-      excerpt: "Desde las canchas de basketball hasta los escenarios de rock, la historia de un ícono cultural.",
+      excerpt:
+        "Desde las canchas de basketball hasta los escenarios de rock, la historia de un ícono cultural.",
       image: "/assets/imgs/converse-allstar.jpg",
       date: "10 Enero 2025",
       readTime: "7 min",
-      category: "Clásicos"
+      category: "Clásicos",
     },
     {
       id: 3,
       title: "Vans: Del Skate a la Moda",
-      excerpt: "La evolución de una marca californiana que conquistó el mundo desde las rampas de skate.",
+      excerpt:
+        "La evolución de una marca californiana que conquistó el mundo desde las rampas de skate.",
       image: "/assets/imgs/vans-skate.jpg",
       date: "5 Enero 2025",
       readTime: "6 min",
-      category: "Cultura"
-    }
+      category: "Cultura",
+    },
   ];
 
   return (
@@ -67,21 +70,27 @@ export default function Blog() {
                   AND1: La Revolución del Streetball
                 </h2>
                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                  En 1993, tres estudiantes universitarios de Filadelfia tenían una visión: crear una marca 
-                  que representara el verdadero espíritu del basketball callejero. Seth Berger, Jay Coen Gilbert 
-                  y Tom Austin fundaron AND1 con una simple premisa: el streetball era más que un deporte, 
-                  era una forma de arte urbano.
+                  En 1993, tres estudiantes universitarios de Filadelfia tenían
+                  una visión: crear una marca que representara el verdadero
+                  espíritu del basketball callejero. Seth Berger, Jay Coen
+                  Gilbert y Tom Austin fundaron AND1 con una simple premisa: el
+                  streetball era más que un deporte, era una forma de arte
+                  urbano.
                 </p>
                 <p className="text-gray-600 text-lg leading-relaxed mb-6">
-                  Lo que comenzó como camisetas con frases provocativas como &quot;I&apos;m the bus driver, I take everyone to school&quot; 
-                  pronto se convirtió en un movimiento cultural. AND1 no solo vendía zapatillas, vendía actitud, 
-                  estilo y la promesa de que cualquiera podía ser una leyenda en su propia cancha.
+                  Lo que comenzó como camisetas con frases provocativas como
+                  &quot;I&apos;m the bus driver, I take everyone to school&quot;
+                  pronto se convirtió en un movimiento cultural. AND1 no solo
+                  vendía zapatillas, vendía actitud, estilo y la promesa de que
+                  cualquiera podía ser una leyenda en su propia cancha.
                 </p>
                 <p className="text-gray-600 text-lg leading-relaxed mb-8">
-                  Las zapatillas AND1 se convirtieron en el calzado oficial de los jugadores de streetball más 
-                  legendarios: Skip to My Lou, Hot Sauce, The Professor. Cada modelo contaba la historia de 
-                  movimientos imposibles, de partidos que se jugaban hasta el amanecer, de una cultura que 
-                  transformó el asfalto en escenario.
+                  Las zapatillas AND1 se convirtieron en el calzado oficial de
+                  los jugadores de streetball más legendarios: Skip to My Lou,
+                  Hot Sauce, The Professor. Cada modelo contaba la historia de
+                  movimientos imposibles, de partidos que se jugaban hasta el
+                  amanecer, de una cultura que transformó el asfalto en
+                  escenario.
                 </p>
                 <div className="flex items-center text-sm text-gray-500">
                   <span>15 Enero 2025</span>
@@ -94,13 +103,18 @@ export default function Blog() {
 
           {/* Blog Grid */}
           <div className="mb-12">
-            <h2 className="text-3xl font-bold mb-8 text-gray-800">Más Historias</h2>
+            <h2 className="text-3xl font-bold mb-8 text-gray-800">
+              Más Historias
+            </h2>
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
               {blogPosts.slice(1).map((post) => (
-                <article key={post.id} className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
+                <article
+                  key={post.id}
+                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                >
                   <div className="relative h-48">
-                    <Image 
-                      src={post.image} 
+                    <Image
+                      src={post.image}
                       alt={post.title}
                       fill
                       className="object-cover"
@@ -134,15 +148,16 @@ export default function Blog() {
               No te pierdas ninguna historia
             </h3>
             <p className="text-gray-300 mb-8 text-lg">
-              Suscribite a nuestro newsletter y recibí las mejores historias del mundo sneaker
+              Suscribite a nuestro newsletter y recibí las mejores historias del
+              mundo sneaker
             </p>
-            <div className="max-w-md mx-auto flex gap-4">
+            <div className="max-w-md mx-auto flex flex-col sm:flex-row gap-4">
               <input
                 type="email"
                 placeholder="tu@email.com"
-                className="flex-1 px-4 py-3 rounded-lg text-gray-800 outline-none"
+                className="w-full sm:flex-1 px-4 py-3 rounded-lg text-gray-800 outline-none bg-white"
               />
-              <button className="bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition-colors">
+              <button className="w-full sm:w-auto bg-red-600 hover:bg-red-700 px-6 py-3 rounded-lg font-semibold transition-colors">
                 Suscribirse
               </button>
             </div>

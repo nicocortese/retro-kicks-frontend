@@ -26,20 +26,20 @@ const BrandLogos = () => {
         </h2>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-8">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-8">
         {brands.map((brand) => (
           <Link
             key={brand.slug}
             href={`/brands/${brand.slug}`}
             className="flex items-center justify-center p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:scale-105"
           >
-            <div className="relative w-full h-20">
+            <div className="relative w-full h-24 sm:h-28 flex items-center justify-center">
               <Image
                 src={brand.image}
                 alt={`${brand.name} logo`}
                 className="object-contain"
-                width={400}
-                height={400}
+                width={150}
+                height={150}
               />
             </div>
           </Link>
