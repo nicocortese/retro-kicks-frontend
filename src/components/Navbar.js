@@ -221,7 +221,7 @@ const Navbar = () => {
             </nav>
           ) : (
             <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 items-center gap-2">
-              <div className="flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-2 w-[280px]">
+              <div className="flex items-center bg-[#FFEFEF] text-[#1a1a1a]/80 rounded-full px-4 py-2 w-[350px]">
                 <FiSearch className="h-5 w-5" />
                 <input
                   type="text"
@@ -311,7 +311,7 @@ const Navbar = () => {
       </div>
 
       <div
-        className={`fixed top-16 left-0 w-full bg-[#1a1a1a] z-40 transform transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-16 left-0 bottom-0 w-full bg-[#1a1a1a] z-40 transform transition-transform duration-300 ease-in-out md:hidden ${
           isMenuOpen ? "translate-x-0" : "-translate-x-full"
         }`}
       >
