@@ -31,7 +31,7 @@ const ProductDetail = ({ id }) => {
       ...product,
       qty: 1,
       selectedSize,
-      uniqueId: `${product._id}-${sele0ctedSize}`,
+      uniqueId: `${product._id}-${selectedSize}`,
     };
     handleAddToCart(productToAdd);
   };
