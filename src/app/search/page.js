@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import SearchClient from './SearchClient'; 
+import SearchClient from './SearchClientPage'; 
 import Loading from '@/components/Loading'; 
 
 export const dynamic = 'force-dynamic';
