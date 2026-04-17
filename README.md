@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 👟 Retro Kicks | Frontend
 
-## Getting Started
+**Retro Kicks** es una tienda de comercio electrónico especializada en zapatillas retro, streetwear y moda deportiva. Este proyecto es el resultado de un **desarrollo colaborativo**, diseñado para ofrecer una experiencia de usuario inmersiva en la cultura *sneaker*.
 
-First, run the development server:
+> ⚠️ **Aviso legal / Proof of Concept:** Este proyecto fue desarrollado exclusivamente con fines de demostración. **No es una tienda real** y en ningún momento se solicitan, procesan ni almacenan datos bancarios o tarjetas de crédito de los usuarios.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+⚙️ **Repositorio del Backend:** [retro-kicks-backend](https://github.com/tiagocollado/retro-kicks-backend)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+---
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🛠️ Stack Tecnológico
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+El proyecto completo es una aplicación Full-Stack (MERN + Next.js). Este repositorio abarca la capa de presentación (Frontend):
 
-## Learn More
+* **Framework:** [Next.js](https://nextjs.org/)
+* **Librería UI:** [React](https://react.dev/)
+* **Diseño UI/UX:** Figma
+* *(El backend asociado utiliza Node.js, Express y MongoDB).*
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## ✨ Estructura y Funcionalidades
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+La interfaz está dividida en secciones clave diseñadas para la conversión y la retención del usuario:
 
-## Deploy on Vercel
+### 🛍️ E-Commerce Core
+* **Shop & Brands:** Catálogo completo de zapatillas con estados de carga optimizados.
+* **Wishlist:** Funcionalidad para guardar modelos favoritos.
+* **Beneficios Destacados:** * 🚚 Envíos GRATIS a todo el país.
+    * 🎧 Soporte 24/7.
+    * 🔄 Devolución en 30 días.
+    * 🔒 Pago 100% Seguro (Simulado).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 📖 Blog: "Sneaker Stories"
+Una sección dedicada a la cultura urbana y la historia del calzado, destacando artículos como:
+* *AND1: La Revolución del Streetball*
+* *Converse All Star: 100 Años de Rebeldía*
+* *Vans: Del Skate a la Moda*
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🏢 About Us
+Página institucional que narra la historia de Retro Kicks (fundada en 2018) y sus valores fundamentales:
+* **Autenticidad:** Verificación y garantía de originalidad.
+* **Pasión:** Amor compartido por la cultura sneaker.
+* **Comunidad:** Conexiones entre amantes del estilo retro.
+
+### ✉️ Newsletter
+Sistema de suscripción para recibir novedades, promociones y los últimos artículos del blog.
+
+---
+
+## 🚀 Instalación y Ejecución Local
+
+Para correr este entorno de frontend en tu máquina local, es recomendable tener el [Backend](https://github.com/tiagocollado/retro-kicks-backend) corriendo en paralelo para que la carga de datos funcione correctamente.
+
+1.  **Clonar el repositorio:**
+    ```bash
+    git clone [URL_DE_ESTE_REPOSITORIO]
+    ```
+
+2.  **Navegar al directorio:**
+    ```bash
+    cd retro-kicks-frontend
+    ```
+
+3.  **Instalar las dependencias:**
+    ```bash
+    npm install
+    ```
+
+4.  **Configurar Variables de Entorno:**
+    Crear un archivo `.env.local` en la raíz del proyecto y vincular la URL del backend local o de producción:
+    ```env
+    NEXT_PUBLIC_API_URL=http://localhost:PUERTO_DEL_BACKEND/api
+    ```
+
+5.  **Iniciar el servidor de desarrollo:**
+    ```bash
+    npm run dev
+    ```
+
+6.  **Visualizar la aplicación:**
+    Abrir [http://localhost:3000](http://localhost:3000) en el navegador.
+
+---
+*Diseñado y desarrollado colaborativamente para los amantes de la cultura sneaker.*
