@@ -9,6 +9,8 @@ import {
 } from "react";
 import axios from "axios";
 
+const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080";
+
 const ShopContext = createContext();
 
 export const ShopContextProvider = ({ children }) => {
@@ -86,9 +88,7 @@ export const ShopContextProvider = ({ children }) => {
   const getProducts = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/products`
-      );
+      const res = await axios.get(`${API_URL}/api/products`);
       setProducts(res.data.products);
     } catch (error) {
       console.log(error);
@@ -100,9 +100,7 @@ export const ShopContextProvider = ({ children }) => {
   const getOneProduct = useCallback(async (id) => {
     try {
       setLoading(true);
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/products/${id}`
-      );
+      const res = await axios.get(`${API_URL}/api/products/${id}`);
       setProduct(res.data.product);
     } catch (error) {
       console.log(error);
@@ -113,9 +111,7 @@ export const ShopContextProvider = ({ children }) => {
 
   const getCategories = useCallback(async () => {
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/categories`
-      );
+      const res = await axios.get(`${API_URL}/api/categories`);
       setCategories(res.data.categories || []);
     } catch (error) {
       console.log("Error al cargar categorías:", error);
@@ -125,9 +121,7 @@ export const ShopContextProvider = ({ children }) => {
   const getProductBycategory = useCallback(async (slug) => {
     setLoading(true);
     try {
-      const res = await axios.get(
-        `${process.env.NEXT_PUBLIC_API_URL}/categories/${slug}`
-      );
+      const res = await axios.get(`${API_URL}/api/categories/${slug}`);
       setCategoryProducts(res.data.products || []);
     } catch (error) {
       console.log(error);
@@ -167,10 +161,7 @@ export const ShopContextProvider = ({ children }) => {
     };
 
     try {
-      await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/orders`,
-        orderValues
-      );
+      await axios.post(`${API_URL}/api/orders`, orderValues);
       return true;
     } catch (error) {
       console.log("error", error);
